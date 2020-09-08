@@ -1,0 +1,98 @@
+.main-header {
+
+    nav {
+        .sidebar-toggle {
+            background: #3da94a;
+            display: none;
+            border-radius: 0 100px 100px 100px;
+            padding: 15px 20px;
+            box-shadow: 2px 2px 10px green;
+            &:hover {
+                background: #338035 !important;
+            }
+
+            @media (max-width: 767px) {
+                position: absolute;
+                display: block;
+                background: #3da94a;
+            }
+        }
+
+        .main-img {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: white;
+            height: 100%;
+            @media (max-width: 767px) {
+                margin-top: 26px;
+            }
+            
+
+            .back-button {
+                button {
+                    background: transparent;
+                    color: black;
+
+                    i {
+                        color: green;
+                    }
+                }
+
+            }
+
+            .img-logo {
+                display: flex;
+                align-items: center;
+            }
+        }
+    }
+
+}
+
+// 20px 13px 28px -7px #40c9404a
+aside {
+    padding-top: 100px;
+    height: 100% !important;
+    section.sidebar {
+        padding-bottom: 0;
+    }
+  
+
+    .sidebar-menu {
+        background: url('../img/design/sidebar-bg.jpg') no-repeat;
+        background-position: center;
+        background-size: cover;
+        border-radius: 0 50px 50px 0;
+        box-shadow: -21px 20px 26px #00000040;
+        ul {
+           
+            li {
+                a {
+                  
+                    color: white !important;
+                    
+                    i{
+                        color: white !important;
+                    }
+                }
+               
+                
+            }
+        }
+        .user-panel {
+            padding: 30px 0 10px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            @media (max-width: 767px){
+                padding: 100px 0 0 0;
+            }
+        }
+    }
+
+
+
+
+}

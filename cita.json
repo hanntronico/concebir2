@@ -1,0 +1,4 @@
+[
+{"cita_id":"3","cita_fecha":"2020-06-10","cita_hora":"06:25:00","usuario_idmedico":"7","usuario_idpaciente":"3","especialidad_id":"1","sede_id":"1","cita_fechareg":"2020-06-08 23:56:07","cita_activo":"0","cita_eliminado":"1","usuario_idreg":"1"},
+{"cita_id":"4","cita_fecha":"2020-06-10","cita_hora":"06:26:00","usuario_idmedico":"7","usuario_idpaciente":"10","especialidad_id":"1","sede_id":"1","cita_fechareg":"2020-06-09 14:11:03","cita_activo":"1","cita_eliminado":"0","usuario_idreg":"10"}
+]

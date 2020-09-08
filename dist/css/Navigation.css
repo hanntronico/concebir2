@@ -1,0 +1,74 @@
+.main-header nav .sidebar-toggle {
+  background: #3da94a;
+  display: none;
+  border-radius: 0 100px 100px 100px;
+  padding: 15px 20px;
+  box-shadow: 2px 2px 10px green;
+}
+.main-header nav .sidebar-toggle:hover {
+  background: #338035 !important;
+}
+@media (max-width: 767px) {
+  .main-header nav .sidebar-toggle {
+    position: absolute;
+    display: block;
+    background: #3da94a;
+  }
+}
+.main-header nav .main-img {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  height: 100%;
+}
+@media (max-width: 767px) {
+  .main-header nav .main-img {
+    margin-top: 26px;
+  }
+}
+.main-header nav .main-img .back-button button {
+  background: transparent;
+  color: black;
+}
+.main-header nav .main-img .back-button button i {
+  color: green;
+}
+.main-header nav .main-img .img-logo {
+  display: flex;
+  align-items: center;
+}
+
+aside {
+  padding-top: 100px;
+  height: 100% !important;
+}
+aside section.sidebar {
+  padding-bottom: 0;
+}
+aside .sidebar-menu {
+  background: url("../img/design/sidebar-bg.jpg") no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 0 50px 50px 0;
+  box-shadow: -21px 20px 26px #00000040;
+}
+aside .sidebar-menu ul li a {
+  color: white !important;
+}
+aside .sidebar-menu ul li a i {
+  color: white !important;
+}
+aside .sidebar-menu .user-panel {
+  padding: 30px 0 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@media (max-width: 767px) {
+  aside .sidebar-menu .user-panel {
+    padding: 100px 0 0 0;
+  }
+}
+
+/*# sourceMappingURL=Navigation.css.map */

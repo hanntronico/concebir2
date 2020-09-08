@@ -1,0 +1,32 @@
+.login-box .login-box-body {
+  background: white;
+  box-shadow: 12px 12px 20px #08100c52;
+  border-radius: 35px;
+  padding: 0 13%;
+}
+.login-box .login-box-body .form-group {
+  border-bottom: 1px solid;
+}
+.login-box .login-box-body .create-account {
+  margin-top: 34px !important;
+}
+.login-box .login-box-body .morangesoft-background-primary {
+  background: linear-gradient(to left, #18481ce8, #3ecc3ead) !important;
+  border: none;
+  border-radius: 50px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  min-height: 48px;
+  outline: none;
+  transition: all ease-in-out 0.2s;
+}
+.login-box .login-box-body .morangesoft-background-primary:hover {
+  background: linear-gradient(to left, #4fc059e8, #04b304b4) !important;
+  transform: translate(-5px, -5px);
+}
+.login-box .login-box-body .password {
+  margin: 10px 0;
+}
+
+/*# sourceMappingURL=Login.css.map */
