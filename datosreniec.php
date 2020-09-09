@@ -10,7 +10,7 @@
 	$api="https://104.200.144.70/api/datosreniec/70435464";
 	$datosreniec = json_decode(file_get_contents($api), true);
 
-	print_r($datosreniec);	
+	echo $datosreniec['status'];
 
 	// if ($datosreniec['status']=='1') {
 	// 	echo $datosreniec['objModel']['nombres']."-".$datosreniec['objModel']['apellidoPaterno']." ".$datosreniec['objModel']['apellidoMaterno'];
