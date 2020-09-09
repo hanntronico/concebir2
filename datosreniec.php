@@ -6,18 +6,18 @@
 
 // https://104.200.144.70/api/datosreniec/70435464 ------ nueva URL
 
-	// $api="https://104.200.144.70/api/datosreniec/".$_POST["dni"];
-	$api="https://104.200.144.70/api/datosreniec/70435464";
+	$api="https://104.200.144.70/api/datosreniec/".$_POST["dni"];
+	// $api="https://104.200.144.70/api/datosreniec/70435464";
 	$datosreniec = json_decode(file_get_contents($api), true);
 
 
 
-	// if ($datosreniec['status']=='1') {
-	// 	echo $datosreniec['objModel']['nombres']."-".$datosreniec['objModel']['apellidoPaterno']." ".$datosreniec['objModel']['apellidoMaterno'];
-	// }
-	// elseif($datosreniec['status']=='0'){
-	// 	echo "NA";		
-	// }
+	if ($datosreniec['status']=='1') {
+		echo $datosreniec['objModel']['nombres']."-".$datosreniec['objModel']['apellidoPaterno']." ".$datosreniec['objModel']['apellidoMaterno'];
+	}
+	elseif($datosreniec['status']=='0'){
+		echo "NA";		
+	}
 
 
 
