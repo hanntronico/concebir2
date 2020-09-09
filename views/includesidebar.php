@@ -122,7 +122,7 @@ if ($perfil=="1"){ // Administrador
     </li> 
     <li class='animate__animated animate__fadeInLeft' style='animation-delay: 160ms;'>
       <a href='pagos'>
-        <i class='fa fa-money'></i> Pagos
+        <i class='fa fa-money'></i> Pagos Realizados
       </a>
     </li>  
     <li style='padding-bottom: 20px; animation-delay: 180ms;' class='animate__animated animate__fadeInLeft'>

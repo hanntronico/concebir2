@@ -39,7 +39,8 @@ $result = $conexion->doSelect("
     c.cita_activo,
     IF(c.cita_activo = 1, 'Activo', 'Inactivo') AS estado,
     cita_precio,
-    estatus_nombre
+    estatus_nombre,
+    estatus.estatus_id
 
     "
     ,
@@ -81,6 +82,7 @@ foreach($result as $i=>$valor){
     $cita_activo = utf8_encode($valor["cita_activo"]);
     $cita_precio = utf8_encode($valor["cita_precio"]);
     $estatus_nombre = utf8_encode($valor["estatus_nombre"]);
+    $estatus_id = utf8_encode($valor["estatus_id"]);
 
     if ($cita_precio==""){$cita_precio=0;}
 
@@ -119,7 +121,16 @@ foreach($result as $i=>$valor){
         // $pagos .= "<button type='button' class='btn btn-success'></button>";
         // $pagos .= "<i onclick='javascript: document.location.href=\""."seleccionarformapago?id=".$cita_id."\";' title='Pagar' class='fa fa-dollar btn btn-habilitar'></i>";
 
-        $pagos .= "<i onclick='confirmarpago(".$cita_id.")' title='Pagar' class='fa fa-dollar btn btn-habilitar'></i>";
+        if ($estatus_id==6) {
+            $enlpago = "confirmarpago($cita_id)";
+            $color_enlace_pago="";
+        }else{
+            $enlpago = "#";
+            $color_enlace_pago="style='color:#C6C6C6'";
+        }    
+
+        $pagos .= "<i onclick='".$enlpago."' title='Pagar' class='fa fa-dollar btn btn-habilitar' ".$color_enlace_pago."></i>";
+
 
 
         if ($interval->format("%Y")==0 && $interval->format("%m")==0 && $interval->format("%d")==0) {

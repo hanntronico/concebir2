@@ -157,7 +157,7 @@
                                 <div class='col-md-9'>
                                     <?php 
                                       if ($semana!="") {
-                                        echo "Disponible : ".$semana; 
+                                        echo "Horario Semanal : ".$semana; 
                                       }else{
                                         echo "Sin Horario";
                                       }

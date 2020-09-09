@@ -237,6 +237,23 @@
               Ingresa tus datos
             </h4>
             <hr>
+
+            <div class="form-group ">
+              <select id="tipo-documento" class="form-control required" name="tipo-documento">
+                <option value="0" selected>Tipo de documento</option>
+                <option value="1">DOCUMENTO NACIONAL DE IDENTIDAD(DNI)</option>
+                <option value="2">CARNET DE EXTRANJERIA</option>
+                <option value="3">PASAPORTE</option>
+              </select>
+            </div>
+
+            <div>
+              <div class="form-group has-feedback">
+                <input type="text" class="form-control" placeholder="Nro de Documento" required="required"
+                  name="documento" id="documento" onblur="obtenerdatosreniec()">
+              </div>
+            </div>
+
             <div>
               <div class="form-group has-feedback">
                 <input type="text" class="form-control" placeholder="Escribe tus nombres" name="name"
@@ -250,22 +267,8 @@
               </div>
             </div>
 
-            <div class="form-group ">
-              <select id="tipo-documento" class="form-control required" name="tipo-documento">
-                <option value="0" selected>Tipo de documento</option>
-                <option value="1">DOCUMENTO NACIONAL DE IDENTIDAD(DNI)</option>
-                <option value="2">CARNET DE EXTRANJERIA</option>
-                <option value="3">PASAPORTE</option>
-              </select>
-            </div>
 
 
-            <div>
-              <div class="form-group has-feedback">
-                <input type="text" class="form-control" placeholder="Nro de Documento" required="required"
-                  name="documento" id="documento">
-              </div>
-            </div>
 
             <div>
               <div class="form-group has-feedback">
@@ -364,7 +367,10 @@
         $('.step-2').hide();
       })
     });
+
+ 
   </script>
+
 
   <script src="dist/js/func.js"></script>
   <script src="lib/bootbox/bootbox.js"></script>

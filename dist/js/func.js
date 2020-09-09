@@ -352,3 +352,71 @@ function ingresarusuario(){
 	}
 	
 }
+
+
+
+$(function(){
+  $('#documento').keypress(function(e) {
+        if(isNaN(this.value+""+String.fromCharCode(e.charCode))) return false;
+  })
+  .on("cut copy paste",function(e){
+        e.preventDefault();
+  });
+});
+
+
+
+function obtenerdatosreniec(){
+
+    var docu = document.getElementById("documento").value;
+
+    // $.post( "example.php", {dni: docu}, function( data ) {
+    //     // // $( ".result" ).html( data );
+    //     // var datos = data.split("-",2);
+    //     // if (datos[0]!="NA") {
+    //     //     document.getElementById("nombre").value = datos[0];
+    //     //     document.getElementById("apellido").value = datos[1];
+    //     // }else{
+    //     //     alert( "error" );
+    //     // }
+
+
+    //   .done(function() {
+    //     alert( "second success" );
+    //   })
+
+    //   .fail(function() {
+    //         alert( "error" );
+    //   })
+
+
+    // });
+
+
+
+    var jqxhr = $.post( "datosreniec.php", {dni: docu}, function( data ) {
+      // alert( "success" );
+
+    })
+    
+      .done(function( data ) {
+        // alert( "second success" );
+      
+        var datos = data.split("-",2);
+        if (datos[0]!="NA") {
+            document.getElementById("nombre").value = datos[0];
+            document.getElementById("apellido").value = datos[1];
+        }else{
+            document.getElementById("nombre").value = "";
+            document.getElementById("apellido").value = "";
+            alert( "DNI no encontrado" );
+        }    
+      
+      })
+
+      .fail(function( data ) {
+        alert( "error" );
+      })
+
+
+}

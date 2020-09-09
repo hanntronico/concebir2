@@ -346,9 +346,12 @@
     function confirmarpago(idcita){
         bootbox.confirm("¿Pagar ahora?", function(result){
             if (result==true){
-                document.location.href="seleccionarformapago?id="+idcita;
+                // document.location.href="seleccionarformapago?id="+idcita;
+                document.location.href="confirmarpago?f=2&id="+idcita;
             }        
         })
     }
-    
+
+
+   
 </script>

@@ -16,10 +16,20 @@ if ($getsalir_id==1){
 	";
 }
 
+// http://104.200.144.70:8085/api/datosreniec/08714804
+
 $xajax->registerFunction('ingresarusuario');
 $xajax->registerFunction('registrarusuario2');
 
 $conexion = new ConexionBd();
+
+// $datosreniec = json_decode(file_get_contents('http://104.200.144.70:8085/api/datosreniec/08714804'), true);
+
+// echo $datosreniec['objModel']['nombres']."<br>";
+// echo $datosreniec['objModel']['apellidoPaterno']."<br>";
+// echo $datosreniec['objModel']['apellidoMaterno']."<br>";
+
+// exit();
 
 session_start();
 (isset($_GET['email'])) ? $email=$_GET['email'] :$email='';
