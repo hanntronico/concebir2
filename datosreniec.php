@@ -6,11 +6,11 @@
 
 // https://104.200.144.70/api/datosreniec/70435464 ------ nueva URL
 
-	echo $_POST["dni"];
-
 	// $api="https://104.200.144.70/api/datosreniec/".$_POST["dni"];
-	// $api="https://104.200.144.70/api/datosreniec/70435464";
-	// $datosreniec = json_decode(file_get_contents($api), true);
+	$api="https://104.200.144.70/api/datosreniec/70435464";
+	$datosreniec = json_decode(file_get_contents($api), true);
+
+	var_dump($datosreniec);
 
 	// echo $datosreniec['status'];
 
