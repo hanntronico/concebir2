@@ -400,8 +400,12 @@ function obtenerdatosreniec(){
     })
     
       .done(function( data ) {
-        // alert( "second success" );
       
+      var daterr = data.split("Warning",2);
+
+      if (daterr[0]!=" "){
+        alert("Error de respuesta");
+      }else{
         var datos = data.split("-",2);
         if (datos[0]!="NA") {
             document.getElementById("nombre").value = datos[0];
@@ -410,7 +414,13 @@ function obtenerdatosreniec(){
             document.getElementById("nombre").value = "";
             document.getElementById("apellido").value = "";
             alert( "DNI no encontrado" );
-        }    
+        } 
+      }
+
+        // alert( datos[0] );
+      
+   
+
       
       })
 

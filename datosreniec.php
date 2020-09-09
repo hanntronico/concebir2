@@ -9,10 +9,10 @@
 
 	if ($datosreniec['status']=='1') {
 		echo $datosreniec['objModel']['nombres']."-".$datosreniec['objModel']['apellidoPaterno']." ".$datosreniec['objModel']['apellidoMaterno'];
-	}else{
+	}
+	elseif($datosreniec['status']=='0'){
 		echo "NA";		
 	}
-
 
 	// echo $datosreniec['status']."-".$datosreniec['objModel']['nombres']."-".$datosreniec['objModel']['apellidoPaterno']."-".$datosreniec['objModel']['apellidoMaterno'];
 
