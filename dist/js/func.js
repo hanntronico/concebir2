@@ -369,6 +369,35 @@ $(function(){
 function obtenerdatosreniec(){
 
     var docu = document.getElementById("documento").value;
+    // alert(docu);
+
+    var jqxhr = $.post( "datosreniec.php", {dni: docu}, function( data ) {
+      // alert( "success" );
+      alert( data );
+    })
+
+
+    //   .done(function( data ) {
+      
+    //   var daterr = data.split("Warning",2);
+
+    //   if (daterr[0]!=" "){
+    //     alert("Error de respuesta");
+    //   }else{
+    //     var datos = data.split("-",2);
+    //     if (datos[0]!="NA") {
+    //         document.getElementById("nombre").value = datos[0];
+    //         document.getElementById("apellido").value = datos[1];
+    //     }else{
+    //         document.getElementById("nombre").value = "";
+    //         document.getElementById("apellido").value = "";
+    //         alert( "DNI no encontrado" );
+    //     } 
+    //   }
+    // })
+
+
+
 
     // $.post( "example.php", {dni: docu}, function( data ) {
     //     // // $( ".result" ).html( data );
@@ -394,39 +423,39 @@ function obtenerdatosreniec(){
 
 
 
-    var jqxhr = $.post( "datosreniec.php", {dni: docu}, function( data ) {
-      // alert( "success" );
+    // var jqxhr = $.post( "datosreniec.php", {dni: docu}, function( data ) {
+    //   // alert( "success" );
+    //   alert( "retorna dato" );
 
-    })
+    // })
     
-      .done(function( data ) {
+      // .done(function( data ) {
       
-      var daterr = data.split("Warning",2);
+      // var daterr = data.split("Warning",2);
 
-      if (daterr[0]!=" "){
-        alert("Error de respuesta");
-      }else{
-        var datos = data.split("-",2);
-        if (datos[0]!="NA") {
-            document.getElementById("nombre").value = datos[0];
-            document.getElementById("apellido").value = datos[1];
-        }else{
-            document.getElementById("nombre").value = "";
-            document.getElementById("apellido").value = "";
-            alert( "DNI no encontrado" );
-        } 
-      }
+      // if (daterr[0]!=" "){
+      //   alert("Error de respuesta");
+      // }else{
+      //   var datos = data.split("-",2);
+      //   if (datos[0]!="NA") {
+      //       document.getElementById("nombre").value = datos[0];
+      //       document.getElementById("apellido").value = datos[1];
+      //   }else{
+      //       document.getElementById("nombre").value = "";
+      //       document.getElementById("apellido").value = "";
+      //       alert( "DNI no encontrado" );
+      //   } 
+      // }
 
-        // alert( datos[0] );
-      
+    
    
 
       
-      })
+      // })
 
-      .fail(function( data ) {
-        alert( "error" );
-      })
+      // .fail(function( data ) {
+      //   alert( "error" );
+      // })
 
 
 }
