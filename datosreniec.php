@@ -1,13 +1,12 @@
 <?php
-phpinfo();
+
 //API URL
-// $url = 'https://104.200.144.70/api/datosreniec/70435464';
+  $url = 'https://104.200.144.70/api/datosreniec/70435464';
 
-// // $url ='http://api.geonames.org/citiesJSON?north=44.1&south=-9.9&east=-22.4&west=55.2&lang=de&username=demo';
-//   $json = file_get_contents($url);
-//   $array = json_decode($json,true);
+  $json = file_get_contents($url);
+  $array = json_decode($json,true);
 
-//   print_r($array);
+  print_r($array);
 
 // //create a new cURL resource
 // $ch = curl_init($url);
