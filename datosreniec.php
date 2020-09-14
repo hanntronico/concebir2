@@ -1,12 +1,7 @@
 <?php
 
 //API URL
-  $url = 'https://104.200.144.70/api/datosreniec/70435464';
 
-  $json = file_get_contents($url);
-  $array = json_decode($json,true);
-
-  print_r($array);
 
 // //create a new cURL resource
 // $ch = curl_init($url);
@@ -54,9 +49,10 @@
 
 	// $api="https://104.200.144.70/api/datosreniec/".$_POST["dni"];
 	// $api="http://104.200.144.70/api/datosreniec/70435464";
-	// $datosreniec = json_decode(file_get_contents($api), true);
+	$api="http://104.200.144.70:8085/api/datosreniec/70435464";
+	$datosreniec = json_decode(file_get_contents($api), true);
 
-	// var_dump($datosreniec);
+	var_dump($datosreniec);
 
 	// echo $datosreniec['status'];
 
@@ -82,3 +78,14 @@
 
 
 ?>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js" integrity="sha512-WNLxfP/8cVYL9sj8Jnp6et0BkubLP31jhTG9vhL/F5uEZmg5wEzKoXp1kJslzPQWwPT1eyMiSxlKCgzHLOTOTQ==" crossorigin="anonymous"></script>
+
+<script src="sw.js"></script>
+
+<button type="button" id="boton" class="btn btn-secondary btn-lg">Button</button>
+
+
+
+

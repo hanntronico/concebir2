@@ -5,16 +5,16 @@
 
 //include_once 'lib/phpmailer/libemail.php';
 
-define ("R","m4T}5qdQ4pX3"); //Clave
-define ("M","sacomici_concebir"); //Usuario
-define ("E","sacomici_concebir"); //Bd
-define ("N","localhost"); //Servidor 
-//define ("N","5omC4aorW2tx"); //Servidor 
-
-// define ("R","*274053*"); //Clave
-// define ("M","root"); //Usuario
+// define ("R","m4T}5qdQ4pX3"); //Clave
+// define ("M","sacomici_concebir"); //Usuario
 // define ("E","sacomici_concebir"); //Bd
 // define ("N","localhost"); //Servidor 
+// //define ("N","5omC4aorW2tx"); //Servidor 
+
+define ("R","*274053*"); //Clave
+define ("M","root"); //Usuario
+define ("E","sacomici_concebir"); //Bd
+define ("N","localhost"); //Servidor 
 
 // define ("N","5omC4aorW2tx"); //Servidor 
 

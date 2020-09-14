@@ -61,6 +61,7 @@ $arrresultado = $conexion->doSelect("
 	",
 	"especialidad_activo = '1'");
 
+
 foreach($arrresultado as $i=>$valor){
 
 	$especialidad_id = utf8_encode($valor["especialidad_id"]);
