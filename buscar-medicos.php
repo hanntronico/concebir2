@@ -47,7 +47,7 @@ if ($getespecialidad!=""){
 	$arrresultado = $conexion->doSelect("
 	usuario.usuario_id, usuario.usuario_nombre, usuario.usuario_apellido, usuario.usuario_email, usuario.usuario_clave, 
 	usuario.usuario_dni, usuario.usuario_celular, usuario.usuario_img, usuario.perfil_id, usuario.usuario_activo,
-	usuario.usuario_eliminado, usuario.usuario_idreg,
+	usuario.usuario_eliminado, usuario.usuario_idreg, usuario._pk_doctor,
 	DATE_FORMAT(usuario_fechareg,'%d/%m/%Y %H:%i:%s') as usuario_fechareg,
 	usuario_precio	
     ",
@@ -81,7 +81,7 @@ elseif ($getsede!=""){
 
 	$arrresultado = $conexion->doSelect("
 	usuario.usuario_id, usuario.usuario_nombre, usuario.usuario_apellido, usuario.usuario_email, usuario.usuario_clave, 
-	usuario.usuario_dni, usuario.usuario_celular, usuario.usuario_img, usuario.perfil_id, usuario.usuario_activo,
+	usuario.usuario_dni, usuario.usuario_celular, usuario.usuario_img, usuario.perfil_id, usuario.usuario_activo,  usuario._pk_doctor,
 	usuario.usuario_eliminado, usuario.usuario_idreg,
 	DATE_FORMAT(usuario_fechareg,'%d/%m/%Y %H:%i:%s') as usuario_fechareg
     ",
@@ -98,7 +98,7 @@ else{
 	$arrresultado = $conexion->doSelect("
 	usuario.usuario_id, usuario.usuario_nombre, usuario.usuario_apellido, usuario.usuario_email, usuario.usuario_clave, 
 	usuario.usuario_dni, usuario.usuario_celular, usuario.usuario_img, usuario.perfil_id, usuario.usuario_activo,
-	usuario.usuario_eliminado, usuario.usuario_idreg,
+	usuario.usuario_eliminado, usuario.usuario_idreg,  usuario._pk_doctor,
 	DATE_FORMAT(usuario_fechareg,'%d/%m/%Y %H:%i:%s') as usuario_fechareg, 
 	usuario_precio
     ",
@@ -185,7 +185,7 @@ $animation_delay = 2;
 foreach($arrresultado as $i=>$valor){
 
 	$usuario_id = utf8_encode($valor["usuario_id"]);
-
+	$pk_doctor = utf8_encode($valor["_pk_doctor"]);
 	$usuario_nombre = utf8_encode($valor["usuario_nombre"]);
 	$usuario_apellido = utf8_encode($valor["usuario_apellido"]);
 	$usuario_email = utf8_encode($valor["usuario_email"]);
@@ -211,7 +211,7 @@ foreach($arrresultado as $i=>$valor){
 					
 		        <div class='col-sm-12'>
 		        	<div style='height: 200px; display: flex; justify-content: center;'>
-			            <a href='medico?e=5&id=$usuario_id'>
+			            <a href='medico?e=5&id=$pk_doctor'>
 			              <img src='arch/$usuario_img' style='max-width: 100%; max-height: 200px; border-radius: 50%; box-shadow: 3px 11px 16px #1f4e3626;' alt='$usuario_nombre $usuario_apellido' title='$usuario_nombre $usuario_apellido'>
 			            </a>	
 		            </div>
@@ -219,13 +219,13 @@ foreach($arrresultado as $i=>$valor){
 						
 
 		        <div class='col-sm-12'>
-		          <a href='medico?e=5&id=$usuario_id'>
+		          <a href='medico?e=5&id=$pk_doctor'>
 		            <h4 style='font-size: 22px; text-align: center; padding: 20px 0;'>$usuario_nombre $usuario_apellido</h4>
 		          </a>
 		          <hr>
 		          <div class='row'>
 		            <div class='col-sm-12' style='margin-top: 10px'>
-		              <a href='reservar?e=5&id=$usuario_id' class='btn-medical btn-reserved'>
+		              <a href='reservar?e=5&id=$pk_doctor' class='btn-medical btn-reserved'>
 						<button type='button' class='btn btn-primary btn-animation' style='font-size: 17px'>
 						 <span style='margin-right: 8px;'>Reservar</span>
 						 <i class='fa fa-calendar' style='color: white !important;'></i>
@@ -233,9 +233,9 @@ foreach($arrresultado as $i=>$valor){
 		              </a>
 		            </div>
 		            <div class='col-sm-12' style='margin-top: 10px'>
-		              <a href='medico?e=5&id=$usuario_id' class='btn-medical btn-more-information'>
+		              <a href='medico?e=5&id=$pk_doctor' class='btn-medical btn-more-information'>
 						<button type='button' class='btn btn-success btn-animation' style='font-size: 17px'>
-						<span style='margin-right: 8px;'>Ver MÃ¡s</span>
+						<span style='margin-right: 8px;'>Ver Más</span>
 						<i class='fa fa-list'></i>
 						</button>
 		              </a>

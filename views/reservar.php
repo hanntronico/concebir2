@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿﻿<!DOCTYPE html>
 <html>
 
 <head>
@@ -9,6 +9,8 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
+  
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
@@ -43,6 +45,31 @@
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="https://static.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico">
+  <link rel="mask-icon" type="" href="https://static.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111">
+  <link rel="canonical" href="https://codepen.io/pen/?&amp;editable=true&amp;editors=001=https%3A%2F%2Ffullcalendar.io%2F">
+  
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@3.10.2/dist/fullcalendar.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+  <style class="INLINE_PEN_STYLESHEET_ID">
+    html, body {
+  margin: 0;
+  padding: 0;
+  font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+  font-size: 14px;
+}
+
+#calendar {
+  max-width: 900px;
+  margin: 40px auto;
+}
+  </style>
+
+  
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -56,6 +83,54 @@
     #btn-reservar .fa-times {
       display: none;
     }
+  </style>
+  <script>
+    $(function() {
+$("#month").change(function(){
+  var month= $("#month").val();
+  var currentlocation= window.location.href;
+  window.location.href= currentlocation+"&h="+month;
+  //alert(month);
+});
+$("#day").change(function(){
+  var day= $("#day").val();
+  var currentlocation= window.location.href;
+  window.location.href= currentlocation+"&dia="+day;
+  //alert(day);
+});
+  $('#calendar').fullCalendar({
+    themeSystem: 'bootstrap4',
+    header: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'month,agendaWeek,agendaDay,listMonth'
+    },
+    weekNumbers: true,
+    eventLimit: true, // allow "more" link when too many events
+   // events: 'https://fullcalendar.io/demo-events.json'
+  });
+
+});
+
+
+function myFunction() {
+         var day= document.getElementById("month").value;
+        alert (day);
+}
+  </script>
+  <style>
+      html, body {
+  margin: 0;
+  padding: 0;
+  font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+  font-size: 14px;
+}
+
+#calendar {
+  max-width: 900px;
+  margin: 40px auto;
+}
+
   </style>
   <!-- Site wrapper -->
   <div class="wrapper">
@@ -93,8 +168,9 @@
                   <h3 class="animate__animated animate__fadeInDown">
                     <i class="fa fa-user-md"></i> Especialidad:
                   </h3>
+                                  <?php echo $divespecialidades;?>
+
                   <div class="animate__animated animate__fadeInDown" style="margin-top: 15px" id="btn-reservar">
-                    <?php echo $divespecialidades;?>
                   </div>
                   <hr>
                   <div <?php echo $displaysedes;?>>
@@ -104,25 +180,29 @@
                       <i class="fa fa-building"></i> Seleccione la Sede para la Reserva:
                     </h3>
                     <div class="animate__animated animate__fadeInDown" style="margin-top: 15px">
+                    
+                    
                       <?php echo $divsedes;?>
                     </div>
 
                   </div>
+                </div>
 
-                  <div <?php echo $displayfechas;?>>
+                  <div style="padding-left: 26%;" <?php echo $displayfechas;?> >
 
 
                     <h3 class="animate__animated animate__fadeInDown" style="margin-top: 50px;">
                       <i class="fa fa-calendar"></i> Seleccione la fecha de su Reserva:
                     </h3>
                     <div class="animate__animated animate__fadeInDown" style="margin-top: 15px">
+                    <input type="date" placeholder="Mes" id="month" />
 
                       <?php echo $divfecha;?>
                     </div>
                   </div>
 
                   <hr>
-                  <div <?php echo $displayhorarios;?>>
+                  <div <?php //echo $displayhorarios;?>>
 
 
                     <h3 class="animate__animated animate__fadeInDown">
@@ -195,6 +275,29 @@
   <script src="dist/js/func.js"></script>
   <script src="lib/bootbox/bootbox.js"></script>
   <?php include_once "scriptall.php"; ?>
+ 
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/min/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.10.2/dist/fullcalendar.min.js"></script>
+  <script id="INLINE_PEN_JS_ID">
+    $(function () {
+
+  $('#calendar').fullCalendar({
+    themeSystem: 'bootstrap4',
+    header: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'month,agendaWeek,agendaDay,listMonth' },
+
+    weekNumbers: true,
+    eventLimit: true, // allow "more" link when too many events
+    events: 'https://fullcalendar.io/demo-events.json' });
+
+
+});
+    //# sourceURL=pen.js
+  </script>
 
 </body>
 
