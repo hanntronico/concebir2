@@ -1,11 +1,15 @@
 <?php
 include_once 'lib/config.php';
 
+
 session_start();
 $login=$_SESSION[login];
 $imguser=$_SESSION[imguser];
 $iniuser=$_SESSION[iniuser];
 $perfil=$_SESSION[perfil];
+$divhoras= "";
+
+
 
 $xajax->registerFunction('confirmarreserva');
 
@@ -26,19 +30,25 @@ if ($iniuser==""){
 
 $conexion = new ConexionBd();
 
-$arrresultado = $conexion->doSelect("
-	usuario.usuario_id, usuario.usuario_nombre, usuario.usuario_apellido, usuario.usuario_email, usuario.usuario_clave, 
+$ccquery1="
+	usuario.usuario_id, _pk_doctor, usuario.usuario_nombre, usuario.usuario_apellido, usuario.usuario_email, usuario.usuario_clave, 
 	usuario.usuario_dni, usuario.usuario_celular, usuario.usuario_img, usuario.perfil_id, usuario.usuario_activo,
 	usuario.usuario_eliminado, usuario.usuario_idreg,
 	DATE_FORMAT(usuario_fechareg,'%d/%m/%Y %H:%i:%s') as usuario_fechareg, usuario_precio
-    ",
-	"usuario				
-	",
-	"usuario_activo = '1' and perfil_id = '2' and usuario.usuario_id = '$getmedico'");
+    ";
+$ccquery2="usuario				
+	";
+$ccquery3="usuario_activo = '1' and perfil_id = '2' and usuario._pk_doctor = '$getmedico'";
+
+// echo "select".$ccquery1." from ".$ccquery2." where ".$ccquery3;
+// exit();
+
+$arrresultado = $conexion->doSelect($ccquery1,$ccquery2,$ccquery3);
+
 foreach($arrresultado as $i=>$valor){
 
 	$usuario_id = utf8_encode($valor["usuario_id"]);
-
+	$pk_doctor = utf8_encode($valor["_pk_doctor"]);
 	$usuario_nombre = utf8_encode($valor["usuario_nombre"]);
 	$usuario_apellido = utf8_encode($valor["usuario_apellido"]);
 	$usuario_email = utf8_encode($valor["usuario_email"]);
@@ -59,18 +69,104 @@ foreach($arrresultado as $i=>$valor){
 
 }
 
+
+// echo "<pre>";
+// print_r($arrresultado);
+// echo "</pre>";
+// exit();
+	$consul1=" horadesde, horahasta, horamodulo
+	    ";
+	$consul2=" profesionales2			
+	";
+	$consul3=" _pk_doctor = '$getmedico'";
+ 
+	// echo "Select ".$consul1." from ".$consul2." Where ".$consul3;
+	// exit();
+
+	$arrresultado = $conexion->doSelect($consul1,$consul2,$consul3);
+
+$horadesde="";
+$horahasta="";
+$horamodulo="";
+	
+	foreach($arrresultado as $i=>$valor){
+	  $horadesde=utf8_encode($valor["horadesde"]);
+    $horahasta=utf8_encode($valor["horahasta"]);
+    $horamodulo=utf8_encode($valor["horamodulo"]);
+
+
+
+		$x=0;
+    
+  //  	$segundos_horaInicial=strtotime($horadesde);
+  //  	$horafinal = date("H:i",$segundos_horaInicial);
+		// $horaactual= $horadesde->format('H:i');
+
+		// $horaactual = date('s', $horadesde);
+		// $horamax = date('s', $horahasta);
+
+
+		// $horadif= $horamax-$horaactual;
+		// //echo $horadif;
+		// //exit;
+		// $horabloque= date('s', $horamodulo);
+		// //echo $horabloque;
+		// //exit;
+		// $horamodulo= 10;
+		// $tiempos = 60 / $horamodulo;
+
+		// //$tiempos = 60 / $horabloque;
+		// echo $tiempos;
+		// exit();
+		// //echo $horaactual;
+		// //exit;
+
+
+// while($horaactual<= 21)
+// {
+//     $cc=0;
+//     $cct=00;
+//     while($cc <= $tiempos)
+// 			{
+// 		    $divhoras .= "
+// 						<a href='reservar?id=$pk_doctor&e=$especialidad_id&s=$sede_id&h=$horaactual'>
+// 							<button type='button' class='btn btn-success' style='font-size: 17px; cursor: pointer; border-radius: 20px; border: none;  box-shadow: 5px 5px 10px #0000001f;margin: 8px;'>".$horaactual.":".$cct."</button>
+// 						</a>
+// 						";
+// 			    $cc++;
+// 				$cct+=$horabloque;
+// 			}
+// 	$horaactual++;
+// }
+	}
+
+    
+
 if ($getespecialidad!=""){
 	$wherespecialidad = " and usuarioespecialidad.especialidad_id = '$getespecialidad' ";
 }
 
-$arrresultado = $conexion->doSelect("
+
+$cquery1="
 	especialidad.especialidad_id, especialidad_nombre, usuarioespecialidad_id, especialidad_consede
-    ",
-	"especialidad 
+    ";
+$cquery2=	" especialidad 
 		inner join usuarioespecialidad on usuarioespecialidad.especialidad_id = especialidad.especialidad_id		
-		and usuarioespecialidad.usuario_id = '$usuario_id' and usuarioespecialidad_activo = '1'
-	",
-	"especialidad_activo = '1' $wherespecialidad");
+		and usuarioespecialidad.usuario_especialidad_fk = '$pk_doctor' and usuarioespecialidad_activo = '1'
+	";
+$cquery3=" especialidad_activo = '1' $wherespecialidad";
+
+// echo "select ".$cquery1." from ".$cquery2." where ".$cquery3;
+// exit();
+
+
+$arrresultado = $conexion->doSelect($cquery1, $cquery2, $cquery3);
+
+
+
+
+
+
 
 foreach($arrresultado as $i=>$valor){
 
@@ -80,7 +176,7 @@ foreach($arrresultado as $i=>$valor){
 	$especialidad_consede = utf8_encode($valor["especialidad_consede"]);		
 
 	$divespecialidades .= "
-		<a href='reservar?id=$usuario_id&e=$especialidad_id'>
+		<a href='reservar?id=$pk_doctor&e=$especialidad_id'>
 			<button type='button' class='btn btn-success' style='font-size: 17px; cursor: pointer; border: none; border-radius: 20px; padding: 5px 27px; box-shadow: 5px 5px 10px #0000001f; outline: none;'>$especialidad_nombre </button>
 		</a>
 	";
@@ -89,7 +185,7 @@ foreach($arrresultado as $i=>$valor){
 
 if ($especialidad_id==$getespecialidad){
 	$divespecialidades = "
-		<a href='reservar?id=$usuario_id'>
+		<a href='reservar?id=$pk_doctor'>
 			<button type='button' class='btn btn-warning' style='font-size: 17px; cursor: pointer; border: none; border-radius: 20px; padding: 5px 27px; box-shadow: 5px 5px 10px #0000001f; outline: none;'><i class='fa fa-times'></i> $especialidad_nombre </button>
 		</a>
 	";	
@@ -140,7 +236,7 @@ if ($existeespecialidad=="1"){
 			$usuariosede_id = utf8_encode($valor["usuariosede_id"]);
 
 			$divsedes .= "
-				<a href='reservar?id=$usuario_id&e=$especialidad_id&s=$sede_id'>
+				<a href='reservar?id=$pk_doctor&e=$especialidad_id&s=$sede_id'>
 					<button type='button' class='btn btn-success' style='font-size: 17px; cursor: pointer; padding: 5px 27px; margin-top: 20px; border-radius: 20px; outline: none;  background: #76ce81 !important; box-shadow: 0px 11px 10px #0000001f; border: none; color: white !important; '>$sede_nombre </button>
 				</a>			
 			";
@@ -150,7 +246,7 @@ if ($existeespecialidad=="1"){
 
 		if ($sede_id==$getsede){
 			$divsedes = "
-				<a href='reservar?id=$usuario_id&e=$especialidad_id'>
+				<a href='reservar?id=$pk_doctor&e=$especialidad_id'>
 					<button type='button' class='btn btn-warning' style='font-size: 17px; cursor: pointer; border-radius: 20px; border: none;  box-shadow: 0px 11px 10px #0000001f; padding: 5px 27px;'><i class='fa fa-times'></i> $sede_nombre </button>
 				</a>
 			";	
@@ -177,84 +273,215 @@ if ($existeespecialidad=="1"){
 
 
 
+ 
+
+
+// $x=0;
+// $horaInicial="09:00";
+// $minutoAnadir=10;
+
+// while( $x <= 53 ){
+// 	$segundos_horaInicial=strtotime($horaInicial);
+// 	$segundos_minutoAnadir=$minutoAnadir*60;
+// 	$arrHorarioList[$x] = date("H:i",$segundos_horaInicial+$segundos_minutoAnadir);
+// 	$horaInicial = $arrHorarioList[$x];
+// 	$x++;
+// }
+// $arrHorarioList= json_encode($arrHorarioList);
+// $numcharactersArrHorarioList= strlen($arrHorarioList);
+// $arrHorarioList= substr($arrHorarioList,1, 6);
+// //$arrHorarioList= substr($arrHorarioList,0);
+
+// $arrHorarioList=preg_replace("/[,]/", "", $arrHorarioList);
+// $arrHorarioList=preg_replace('/["]/', "", $arrHorarioList);
+
+//echo "<pre>";
+//print($arrHorarioList);
+//echo "</pre>";
+
+//exit();
+
+   // $arrHorarioList= array("9:10", "9:20", "8:30", "8:40", "8:50", "9:00", "9:10", "...");
+
+
+
 if ($existeespecialidad=="1" && $existesede=="1"){
 
+
+	$wherehorario="";
 	if ($especialidad_consede=="1"){
-		$wherehorario = "and horario.sede_id = '$getsede' ";
+		//$wherehorario = "and horario.sede_id = '$getsede' ";
 	}
 
 
 	if ($gethorario!=""){
-		$wherehorario .= "and horario.horario_id = '$gethorario' ";		
+		$wherehorario .= "and horario._pk_horario = '$gethorario' ";		
 	}
 
 	$displayfechas  ="";
 
-	$arrresultado = $conexion->doSelect("
-		horario.horario_id, horario.usuario_id, horario.sede_id,  
-		horario_activo, horario_eliminado, horario.usuario_idreg,
-		DATE_FORMAT(horario_fecha,'%d/%m/%Y') as horario_fecha,		
-		DATE_FORMAT(horario_horaini,'%H:%i') as horaini, 
-		DATE_FORMAT(horario_horafin,'%H:%i') as horafin, 
-		horario_intervalo,
 
-		DATE_FORMAT(horario_fechareg,'%d/%m/%Y %H:%i:%s') as horario_fechareg, 
-		sede_nombre
-	    ",
-		"horario
-			inner join sede on sede.sede_id = horario.sede_id		
-		",
-		"horario_activo = '1'  and horario.usuario_id = '$getmedico' $wherehorario");
-		$horario_fecha= "No tiene fechas disponibles";
+	$consul1="
+		 horario._pk_horario, horario._fk_doctor,  
+		DATE_FORMAT(fechaInicio,'%d/%m/%Y') as horario_fecha,		
+		DATE_FORMAT(horaInicio,'%H:%i') as horaini, 
+		DATE_FORMAT(horaTermino,'%H:%i') as horafin, 
+        horario1Lunes as horarioLunes,
+		DATE_FORMAT(fechaFin,'%d/%m/%Y %H:%i:%s') as horario_fechareg
+	    ";
+	$consul2=" horario2 as horario			
+	";
+	$consul3=" horario._fk_doctor = '$getmedico'      
+		 $wherehorario";
+
+	// echo "Select ".$consul1." from ".$consul2." Where ".$consul3;
+	// exit();
+
+	$arrresultado = $conexion->doSelect($consul1,$consul2,$consul3);
+		
+	$horario_fecha= "No tiene fechas disponibles";
+
+
+	// $divfecha = "";
+
+		// echo "<pre>";
+		// print_r($arrresultado);
+		// echo "</pre>";
+		// exit();
+
 	foreach($arrresultado as $i=>$valor){
 
 		$horario_id = utf8_encode($valor["horario_id"]);
+		$horarioLunes= utf8_encode($valor["horarioLunes"]);
+		$pk_horario= utf8_encode($valor["_pk_horario"]);
 		$t_usuario_id = utf8_encode($valor["usuario_id"]);
-		$t_sede_id = utf8_encode($valor["sede_id"]);
-
+		//$t_sede_id = utf8_encode($valor["sede_id"]);
+//Use mb_substr to get the first character.
+        
 		$horario_activo = utf8_encode($valor["horario_activo"]);
 		$horario_fecha = utf8_encode($valor["horario_fecha"]);	
 		$horaini = utf8_encode($valor["horaini"]);	
 		$horafin = utf8_encode($valor["horafin"]);	
+
 		$horario_fechareg = utf8_encode($valor["horario_fechareg"]);
-		$horario_intervalo = utf8_encode($valor["horario_intervalo"]);
-		$sede_nombre = utf8_encode($valor["horario_fechareg"]);		
+	//	$horario_intervalo = utf8_encode($valor["horario_intervalo"]);
+	//	$sede_nombre = utf8_encode($valor["horario_fechareg"]);		
+	
+		$countChatHorarioLunes= strlen($horarioLunes);
 
-		$divfecha .= "
-			<a href='reservar?id=$usuario_id&e=$especialidad_id&s=$sede_id&h=$horario_id'>
-				<button type='button' class='btn btn-success' style='font-size: 17px; cursor: pointer; border-radius: 20px; border: none;  box-shadow: 5px 5px 10px #0000001f;margin: 8px;'>$horario_fecha </button>
-			</a>			
-		";
-		/*
-		$_old_divfecha .="
-		<div class='row'>
-	      <div class='col-md-3' style='font-size: 20px'>
-	        <label style='font-size: 20px'>Fecha:</label>
-	        $horario_fecha
-	      </div>
-	      <div class='col-md-6' style='font-size: 20px'>
-		      <a href='reservar?id=$usuario_id&e=$especialidad_id&s=$sede_id&h=$horario_id' style='color: green; cursor: pointer' title='Seleccionar'>
-		        <label style='font-size: 20px'>Horario:</label>
-		        $horaini - $horafin  
-		        <i class='fa fa-check-circle'></i>
-	        </a>
-	      </div> 
-	      <div class='col-md-3' style='font-size: 20px'>
-	       
-	      </div>                     
-	    </div>
-		";
 
-		*/
+
+	}
+	
+	$consul1=" horadesde, horahasta, horamodulo
+	    ";
+	$consul2=" profesionales2			
+	";
+	$consul3=" _pk_doctor = '$getmedico'";
+ 
+	// echo "Select ".$consul1." from ".$consul2." Where ".$consul3;
+	 // exit();
+
+	$arrresultado = $conexion->doSelect($consul1,$consul2,$consul3);
+
+
+	foreach($arrresultado as $i=>$valor){
+	  $horadesde=utf8_encode($valor["horadesde"]);
+    $horahasta=utf8_encode($valor["horahasta"]);
+    $horamodulo=utf8_encode($valor["horamodulo"]);
 
 	}
 
-	if ($horario_id==$gethorario){
-		$divfecha = "
-			<a href='reservar?id=$usuario_id&e=$especialidad_id&s=$sede_id'>
-				<button type='button' class='btn btn-warning' style='font-size: 17px; cursor: pointer; border-radius: 20px; border: none; padding: 5px 27px; outline: none; box-shadow: 0px 11px 10px #0000001f;'><i class='fa fa-times'></i> $horario_fecha </button>
+		$x=0;
+    
+    $segundos_horaInicial=strtotime($horadesde);
+    $horafinal = date("H:i",$segundos_horaInicial);
+
+
+
+
+    	$divhoras .= "
+				<a href='reservar?id=$pk_doctor&e=$especialidad_id&s=$sede_id&h=$pk_horario'>
+					<button type='button' class='btn btn-success' style='font-size: 17px; cursor: pointer; border-radius: 20px; border: none;  box-shadow: 5px 5px 10px #0000001f;margin: 8px;'>desde las $horadesde hasta las $horahasta </button>
+				</a>
+				";
+
+
+	if ($pk_horario==$gethorario){
+	/*	$divfecha = '
+			<a href="reservar?id=$pk_doctor&e=$especialidad_id&s=$sede_id">
+				<button type="button" class="btn btn-warning" style="font-size: 17px; cursor: pointer; border-radius: 20px; border: none; padding: 5px 27px; outline: none; box-shadow: 0px 11px 10px #0000001f;"><i class="fa fa-times"></i> $horario_fecha </button>
 			</a>
-		";	
+			<table class="table-condensed table-bordered table-striped">
+                <thead>
+                    <tr>
+                      <th colspan="7">
+                        <span class="btn-group">
+                            <a class="btn"><i class="icon-chevron-left"></i></a>
+                        	<a class="btn active">February 2012</a>
+                        	<a class="btn"><i class="icon-chevron-right"></i></a>
+                        </span>
+                      </th>
+                    </tr>
+                    <tr>
+                        <th>Su</th>
+                        <th>Mo</th>
+                        <th>Tu</th>
+                        <th>We</th>
+                        <th>Th</th>
+                        <th>Fr</th>
+                        <th>Sa</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="muted">29</td>
+                        <td class="muted">30</td>
+                        <td class="muted">31</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>6</td>
+                        <td>7</td>
+                        <td>8</td>
+                        <td>9</td>
+                        <td>10</td>
+                        <td>11</td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td>13</td>
+                        <td>14</td>
+                        <td>15</td>
+                        <td>16</td>
+                        <td>17</td>
+                        <td>18</td>
+                    </tr>
+                    <tr>
+                        <td>19</td>
+                        <td class="btn-primary"><strong>20</strong></td>
+                        <td>21</td>
+                        <td>22</td>
+                        <td>23</td>
+                        <td>24</td>
+                        <td>25</td>
+                    </tr>
+                    <tr>
+                        <td>26</td>
+                        <td>27</td>
+                        <td>28</td>
+                        <td>29</td>
+                        <td class="muted">1</td>
+                        <td class="muted">2</td>
+                        <td class="muted">3</td>
+                    </tr>
+                </tbody>
+            </table>
+		';	*/
 
 		$existehorario = 1;
 	}
@@ -272,55 +499,237 @@ if ($existeespecialidad=="1" && $existesede=="1"){
 	}
 
 }
-$divhoras= "";
-	if ($horario_fecha== "No tiene fechas disponibles"){
+
+
+
+		// echo "existe ".$existeespecialidad." ".$existesede." ".$existehorario;
+		// exit();
+
+	// echo "<script> alert('"."existe ".$existeespecialidad." ".$existesede." ".$existehorario."') </script>";
+
+
+if ($horario_fecha== "No tiene fechas disponibles"){
 
 }
 else
 {
-if ($existeespecialidad=="1" && $existesede=="1" & $existehorario =="1"){
+//	if ($existeespecialidad=="1" && $existesede=="1" & $existehorario =="1"){
+	if ($existeespecialidad=="1" && $existesede=="1"){
 
-	$displayhorarios  ="";
+		// echo "hann";
+		// exit();
+			// echo $pk_horario;
+			// echo "<br>";
+			// echo $horarioLunes;
+			// echo "<br>";
+			// echo $countChatHorarioLunes;
+			// echo "<br>";
 
-	if ($horario_intervalo=="" || $horario_intervalo=="0"){$horario_intervalo=20;}
+// $x=0;
+// $horaInicial="09:00";
+// $minutoAnadir=10;
+// echo "pk_doctor: ".$pk_doctor; exit();
 
 
-	$var1 = $horaini;
-	$var2 = $horafin;	
 
-	$fechaInicio = new DateTime($var1);
-	$fechaFin = new DateTime($var2);
-	$fechaFin = $fechaFin->modify( "+$horario_intervalo minutes"); 
 
-	$rangoFechas = new DatePeriod($fechaInicio, new DateInterval('PT15M'), $fechaFin);
+      $segundos_horafinal = strtotime($horafinal);
+    	// echo " ".$segundos_horafinal = $segundos_horafinal+strtotime($horamodulo);
+    	$segundos_horafinal = $segundos_horafinal+(date("i",strtotime($horamodulo))*60);
+    	ech $horafinal = date("H:i",$segundos_horafinal);
+    	// echo "<br>";
+    	// echo $x."<br>";
 
-	foreach($rangoFechas as $fecha){
-	    $hora = $fecha->format("H:i") . PHP_EOL;
+    	exit();
 
-	    $divhoras .= "	    	
-			<a href='reservar?id=$usuario_id&e=$especialidad_id&s=$sede_id&h=$horario_id&i=$hora' style='margin-right: 10px; margin-bottom: 10px'>
-				<button type='button' class='btn btn-success' style='font-size: 17px; cursor: pointer; margin-top: 10px; padding: 5px 27px; border-radius: 20px; outline: none; box-shadow: 5px 5px 10px #0000001f; border: none;'>$hora </button>
-			</a>
 
-		";
+
+    //	$x++;
+   // }
+
+    // if ($arrHorarioList<=$horahasta) {
+    // 	echo "horario menor a la horahasta";
+    // }
+
+
+	// echo "<pre>";
+	// print_r($arrresultado);
+	// echo "</pre>";
+	// exit();
+
+
+// while( $x <= 53 ){
+// 	$segundos_horaInicial=strtotime($horaInicial);
+// 	$segundos_minutoAnadir=$minutoAnadir*60;
+// 	$arrHorarioList[$x] = date("H:i",$segundos_horaInicial+$segundos_minutoAnadir);
+// 	$horaInicial = $arrHorarioList[$x];
+// 	$x++;
+// }
+
+
+			$displayhorarios  ="";
+
+
+			// $i=0;
+			// while ( $i <= $countChatHorarioLunes ) {
+			// 	// echo $i.": ".$horarioLunes[$i];
+			// 	// echo "<br>";	
+			// 	// $i++;
+
+			// 	if ($horarioLunes[$i]=="1") {
+			// 		echo $horarioLunes[$i].": disponible"."<br>";
+			// 	// }elseif ($horarioLunes[$i]=="0") {
+			// 	// 	echo "no disponible"."<br>";
+			// 	}
+
+
+			// }
+
+			// exit();
+
+			// $horarioL=""; 
+			// $i=0;
+			// $c=0;
+			// $limit=0;
+			// $arrCharHorarioLunes= array();
+			// while($countChatHorarioLunes>$i)
+			// {
+			//     $c=$i+1;
+			//     $arrCharHorarioLunes[$i] = mb_substr($horarioLunes, $i, $c, "UTF-8");
+			// 		 //remover el caracter $i de $horarioLunes despues de esta linea
+			// 		 //asignar el nuevo valor a horariolunes
+		 
+			//     if ($arrCharHorarioLunes[$i] =="0") {
+			 
+			    
+			//    // $horarioL.= "8:10"." - ".$arrCharHorarioLunes[$i]."<br>";
+			//     $limit= $c+5;
+			//     $horarioL.= substr($arrHorarioList,$c, $limit);
+
+			//     //$horarioL.= $arrHorarioList[$i];
+			    
+			//      $divhoras .= "$horaini.$horario_fecha.$horafin
+			// 			<a href='reservar?id=$pk_doctor&e=$especialidad_id&s=$sede_id&h=$pk_horario'>
+			// 				<button type='button' class='btn btn-success' style='font-size: 17px; cursor: pointer; border-radius: 20px; border: none;  box-shadow: 5px 5px 10px #0000001f;margin: 8px;'>$horarioL </button>
+			// 			</a>			
+			// 		";
+			//     }
+			//     $i++;
+
+			// }
+
+			// echo $horarioL; 
+			// echo $divhoras;	
+			// exit();
+			// echo "<pre>";
+			// print_r($arrCharHorarioLunes);
+			// echo "</pre>";
+			// exit();
+
+
+
+
+
+
+
+
+
+
+
+
+
+		// $displayhorarios  ="";
+
+		// if ($horario_intervalo=="" || $horario_intervalo=="0"){$horario_intervalo=20;}
+
+
+		// $var1 = $horaini;
+		// $var2 = $horafin;	
+
+		// $fechaInicio = new DateTime($var1);
+		// $fechaFin = new DateTime($var2);
+		// $fechaFin = $fechaFin->modify( "+$horario_intervalo minutes"); 
+
+		// $rangoFechas = new DatePeriod($fechaInicio, new DateInterval('PT15M'), $fechaFin);
+
+		// foreach($rangoFechas as $fecha){
+		//     $hora = $fecha->format("H:i") . PHP_EOL;
+
+		//     $divhoras .= "	    	
+		// 		<a href='reservar?id=$pk_doctor&e=$especialidad_id&s=$sede_id&h=$pk_horario&i=$hora' style='margin-right: 10px; margin-bottom: 10px'>
+		// 			<button type='button' class='btn btn-success' style='font-size: 17px; cursor: pointer; margin-top: 10px; padding: 5px 27px; border-radius: 20px; outline: none; box-shadow: 5px 5px 10px #0000001f; border: none;'>$hora </button>
+		// 		</a>
+
+		// 	";
+
+		// }
+
+		// if ($getintervalo!=""){
+		// 	$hora = $getintervalo;
+		// 	$divhoras = "	    	
+		// 		<a href='reservar?id=$pk_doctor&e=$especialidad_id&s=$sede_id&h=$pk_horario' style='margin-right: 10px; margin-bottom: 10px'>
+		// 			<button type='button' class='btn btn-warning' style='font-size: 17px; cursor: pointer; margin-top: 10px; padding: 5px 27px; border: none; border-radius: 20px; outline: none; box-shadow: 5px 5px 10px #0000001f;'><i class='fa fa-times'></i> $hora </button>
+		// 		</a>
+
+		// 	";
+
+		// 	$displayconfirmar  ="";
+		// }
+
 
 	}
-
-	if ($getintervalo!=""){
-		$hora = $getintervalo;
-		$divhoras = "	    	
-			<a href='reservar?id=$usuario_id&e=$especialidad_id&s=$sede_id&h=$horario_id' style='margin-right: 10px; margin-bottom: 10px'>
-				<button type='button' class='btn btn-warning' style='font-size: 17px; cursor: pointer; margin-top: 10px; padding: 5px 27px; border: none; border-radius: 20px; outline: none; box-shadow: 5px 5px 10px #0000001f;'><i class='fa fa-times'></i> $hora </button>
-			</a>
-
-		";
-
-		$displayconfirmar  ="";
-	}
-
-
 }
-}
+
+// echo $divhoras;	
+
+
+
+/*****************************************************************************************/
+
+// $horarioL=""; 
+// $i=0;
+// $c=0;
+// $limit-0;
+// $arrCharHorarioLunes= array();
+// while($countChatHorarioLunes>$i)
+// {
+//     $c=$i+1;
+//     $arrCharHorarioLunes[$i] = mb_substr($horarioLunes, $i, $c, "UTF-8");
+//  //remover el caracter $i de $horarioLunes despues de esta linea
+ 
+//  //asignar el nuevo valor a horariolunes
+ 
+ 
+//     if ($arrCharHorarioLunes[$i] =="0")
+//     {
+ 
+    
+//    // $horarioL.= "8:10"." - ".$arrCharHorarioLuness[$i]."<br>";
+//     $limit= $c+5;
+//     $horarioL.= substr($arrHorarioList,$c, $limit);
+
+//     //$horarioL.= $arrHorarioList[$i];
+    
+//      $divfecha .= "$horaini.$horario_fecha.$horafin
+// 			<a href='reservar?id=$pk_doctor&e=$especialidad_id&s=$sede_id&h=$pk_horario'>
+// 				<button type='button' class='btn btn-success' style='font-size: 17px; cursor: pointer; border-radius: 20px; border: none;  box-shadow: 5px 5px 10px #0000001f;margin: 8px;'>$horarioL </button>
+// 			</a>			
+// 		";
+//     }
+//     $i++;
+
+// }
+
+// //echo $horarioL; 
+// //exit();
+// // echo "<pre>";
+// // print_r($arrCharHorarioLunes);
+// // echo "</pre>";
+
+/**************************************************************************************************/
+
+
+
 
 require_once "views/reservar.php";
 
