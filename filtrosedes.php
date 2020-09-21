@@ -16,12 +16,23 @@ if ($iniuser==""){
 
 $conexion = new ConexionBd();
 
-$arrresultado = $conexion->doSelect("
-	sede.sede_id, sede.sede_nombre, sede.sede_nombrecorto, sede.sede_img
-    ",
-	"sede				
-	",
-	"sede_activo = '1' ", null, "sede_nombre asc");
+// Select ubi._pk_ubicacion as ID, 
+// 			 ubi.nombre as nom, 
+// 			 ubi.sigla 
+// from ubicaciones ubi 
+// order by ubi.nombre asc;
+
+$consul1="
+	ubi._pk_ubicacion, ubi.nombre, ubi.sigla, 'no-image' as img
+    ";
+$consul2=" ubicaciones ubi";
+$consul3=" ubi.nombre asc ";
+
+// echo "SELECT ".$consul1." FROM ".$consul2." ORDER BY ".$consul3;
+// exit();
+
+// $strSelect,$strFrom,$strWhere=null,$strGroupBy=null,$strOrderBy=null
+$arrresultado = $conexion->doSelect($consul1,$consul2,null, null, $consul3);
 
 	$divsedes .= '
 	<head>
@@ -73,22 +84,26 @@ $arrresultado = $conexion->doSelect("
 	
 	';
 
+// echo json_encode($arrresultado);
+// exit();
+
 $animation_delay = 2;
 foreach($arrresultado as $i=>$valor){
+// _pk_ubicacion, nombre, sigla
+	$ubi_id = utf8_encode($valor["_pk_ubicacion"]);
+	$ubi_nombre = utf8_encode($valor["nombre"]);
+	$ubi_siglas = utf8_encode($valor["sigla"]);
+	$ubi_img = utf8_encode($valor["img"]);
+	// exit();
 
-	$sede_id = utf8_encode($valor["sede_id"]);
-	$sede_nombre = utf8_encode($valor["sede_nombre"]);
-	$sede_nombrecorto = utf8_encode($valor["sede_nombrecorto"]);
-	$sede_img = utf8_encode($valor["sede_img"]);
-
-	if ($especialidad_img==""){$especialidad_img="0.jpg";}
+	if ($ubi_img=="no-image"){$ubi_img="0.jpg";}
 
 	$divsedes .= "
 		<div class='col-md-4 col-sm-6' style='margin-top: 30px; display: flex; justify-content: center;'>
-			<a href='buscar-medicos?s=$sede_id' class='animate__animated animate__fadeInTopRight' style='animation-delay: .".$animation_delay."s;'>
-				<img src='arch/".$sede_img."' class='img-sede' style='width: auto; max-height: 180px;' alt='$sede_nombre' title='$sede_nombre'>
+			<a href='buscar-medicos?s=$ubi_id' class='animate__animated animate__fadeInTopRight' style='animation-delay: .".$animation_delay."s;'>
+				<img src='arch/".$ubi_img."' class='img-sede' style='width: auto; max-height: 180px;' alt='$ubi_nombre' title='$ubi_nombre'>
 				<div class='btn-animation'>
-					<h5 class='sede-nombre'>$sede_nombre &nbsp;</h5>
+					<h5 class='sede-nombre'>$ubi_nombre &nbsp;</h5>
 					<i class='fa fa-angle-double-right' style='color: green;'></i>
 				</div>
 				

@@ -117,7 +117,8 @@
                     </h3>
                     <div class="animate__animated animate__fadeInDown" style="margin-top: 15px">
 
-                      <?php echo $divfecha;?>
+                       <?php echo $divfecha;?>
+
                     </div>
                   </div>
 

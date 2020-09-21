@@ -153,7 +153,7 @@ ALTER TABLE `citas2`
 ALTER TABLE `citas2`
   MODIFY `_pk_cita` int(11) NOT NULL AUTO_INCREMENT; 
 
-
+-- PAC000069422
 INSERT INTO `status`(`_pk_status`, `nomstatus`) VALUES ('STA000000001','Reservado')
 INSERT INTO `status`(`_pk_status`, `nomstatus`) VALUES ('STA000000002','Confirmado');
 INSERT INTO `status`(`_pk_status`, `nomstatus`) VALUES ('STA000000003','Esperando');
@@ -161,3 +161,28 @@ INSERT INTO `status`(`_pk_status`, `nomstatus`) VALUES ('STA000000004','Atendido
 INSERT INTO `status`(`_pk_status`, `nomstatus`) VALUES ('STA000000005','Falta sin aviso');
 INSERT INTO `status`(`_pk_status`, `nomstatus`) VALUES ('STA000000006','Falta con aviso');
 INSERT INTO `status`(`_pk_status`, `nomstatus`) VALUES ('STA000000007','Sobrecupo');
+
+-- _PK_Paciente				Normal, Texto
+-- _ID 								Normal, Texto
+-- z_timestamp_create	Normal, Fecha y hora
+-- z_timestamp_mod			Normal, Fecha y hora
+-- Name								Normal, Texto
+-- Name_Ap_Pat					Normal, Texto
+-- Name_Ap_Mat					Normal, Texto
+-- DNI									Normal, Texto
+-- FonoCelular					Normal, Texto
+
+CREATE TABLE `pacientes` (
+`_PK_Paciente` varchar(255) NOT NULL, 
+`_ID` varchar(255) NOT NULL,
+`z_timestamp_create` datetime DEFAULT NULL,
+`z_timestamp_mod` datetime DEFAULT NULL,
+`Name` varchar(100) DEFAULT NULL,
+`Name_Ap_Pat` varchar(100) DEFAULT NULL,
+`Name_Ap_Mat` varchar(100) DEFAULT NULL,
+`DNI` varchar(50) DEFAULT NULL,
+`FonoCelular` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+ALTER TABLE `pacientes`
+  ADD PRIMARY KEY (`_PK_Paciente`);

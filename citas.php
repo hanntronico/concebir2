@@ -26,7 +26,7 @@ if ($perfil=="2"){
 
 $conexion = new ConexionBd();
 
-$result = $conexion->doSelect("
+$cadenasql1="
     c.cita_id,    
     c.usuario_idmedico,    
     c.usuario_idpaciente,    
@@ -42,9 +42,9 @@ $result = $conexion->doSelect("
     estatus_nombre,
     estatus.estatus_id
 
-    "
-    ,
-    "
+    ";
+
+$cadenasql2="
     cita c
     LEFT JOIN sede s
        ON c.sede_id = s.sede_id
@@ -59,9 +59,14 @@ $result = $conexion->doSelect("
        ON c.usuario_idpaciente = up.usuario_id
 
     INNER JOIN estatus on estatus.estatus_id = c.estatus_id
-    "
-    ,
-    "c.cita_eliminado = '0' $wherecita");
+    ";
+    
+$cadenasql3="c.cita_eliminado = '0' $wherecita";
+
+// echo "SELECT ".$cadenasql1." FROM ".$cadenasql2." WHERE ".$cadenasql3;
+// exit();
+
+$result = $conexion->doSelect($cadenasql1, $cadenasql2, $cadenasql3);
 // var_dump($result);
 // print_r($result);
 foreach($result as $i=>$valor){
@@ -163,10 +168,12 @@ foreach($result as $i=>$valor){
     
 	
     
-	
+   	 if($pagos!=""){
+    	    $tbfila="<td>".$pagos."</td>";
+   	 }
 	
 	$html .= "
-                <tr style='font-size: 14px'>			          									
+		<tr style='font-size: 14px'>			          									
                     <td>$cita_id</td>
                     <td>$cita_fecha</td>
                     <td>$medico</td>
@@ -176,10 +183,12 @@ foreach($result as $i=>$valor){
                     <td>$cita_precio</td>
                     <td>$cita_fechareg</td>
                     <td>$estatus_nombre</td>
-                    <td>$pagos</td>
+                    ".$tbfila."
                     <td>$acciones</td>
                 </tr>
-			";
+
+
+		";
 
 }
 

@@ -58,26 +58,42 @@ if ($getespecialidad!=""){
 
 }
 elseif ($getsede!=""){
+
 	$wheresede= " and usuariosede.usuario_id = '$getsede' ";
 
-	$arrresultado = $conexion->doSelect("
-		sede.sede_id, sede.sede_nombre, sede.sede_nombrecorto, 
-		sede.sede_img, sede.sede_activo, 
-		sede.sede_eliminado
-	    ",
-		"sede				
-		",
-		"sede_activo = '1' and sede_id = '$getsede'");
+	// $consulta1 = "
+	// 	sede.sede_id, sede.sede_nombre, sede.sede_nombrecorto, 
+	// 	sede.sede_img, sede.sede_activo, 
+	// 	sede.sede_eliminado
+	//     ";
+	// $consulta2 = " sede ";
+	// $consulta3 = " sede_activo = '1' and sede_id = '$getsede' ";
+
+
+	$consulta1 = " ubi._pk_ubicacion, 
+			  ubi.nombre, 
+			  ubi.sigla ";
+	$consulta2 = " ubicaciones ubi ";
+	$consulta3 = " ubi._pk_ubicacion = '$getsede'";
+
+	// echo "Select ".$consulta1." from ".$consulta2." where ".$consulta3;
+	// exit();
+
+	$arrresultado = $conexion->doSelect($consulta1,$consulta2,$consulta3);
+
 	foreach($arrresultado as $i=>$valor){
 
-		$sede_id = utf8_encode($valor["sede_id"]);
-		$sede_nombre = utf8_encode($valor["sede_nombre"]);
-		$sede_img = utf8_encode($valor["sede_img"]);
-		$sede_activo = utf8_encode($valor["sede_activo"]);
+		$sede_id = utf8_encode($valor["_pk_ubicacion"]);
+		$sede_nombre = utf8_encode($valor["nombre"]);
+		// $sede_img = utf8_encode($valor["sede_img"]);
+		// $sede_activo = utf8_encode($valor["sede_activo"]);
 
 		$titulo = "<br><span style='font-weight: 600'>Sede:</span> <span style='font-weight:400'>$sede_nombre</span>";
 
 	}
+
+
+
 
 	$arrresultado = $conexion->doSelect("
 	usuario.usuario_id, usuario.usuario_nombre, usuario.usuario_apellido, usuario.usuario_email, usuario.usuario_clave, 
@@ -90,9 +106,10 @@ elseif ($getsede!=""){
 	",
 	"usuario_activo = '1' and perfil_id = '2' and usuariosede_activo = '1' and usuariosede.sede_id = '$getsede' ");
 
-}
-else{
 
+}
+
+else{
 
 
 	$arrresultado = $conexion->doSelect("
@@ -180,6 +197,13 @@ $divmedicos .= '
 </head>
 	
 ';
+
+// echo json_encode($arrresultado);
+// echo "<pre>";
+// print_r($arrresultado);
+// echo "</pre>";
+// exit();
+
 
 $animation_delay = 2;
 foreach($arrresultado as $i=>$valor){

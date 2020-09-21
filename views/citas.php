@@ -104,7 +104,10 @@
                   <th>Precio</th>
                   <th>Fecha Generada</th>
                   <th>Estado</th>
-                  <th>Pagos</th>
+		  <?php if($pagos!=""){ ?>
+   		    <th>Pagos</th>
+		  <?php } ?>
+		  
                   <th>Acciones</th>
                 </tr>
                 </thead>
