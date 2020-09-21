@@ -1,12 +1,15 @@
 <?php
 include_once 'lib/config.php';
 
+
 session_start();
 $login=$_SESSION[login];
 $imguser=$_SESSION[imguser];
 $iniuser=$_SESSION[iniuser];
 $perfil=$_SESSION[perfil];
 $divhoras= "";
+
+
 
 $xajax->registerFunction('confirmarreserva');
 
@@ -77,13 +80,15 @@ foreach($arrresultado as $i=>$valor){
 	";
 	$consul3=" _pk_doctor = '$getmedico'";
  
-	//echo "Select ".$consul1." from ".$consul2." Where ".$consul3;
-	 //exit();
+	// echo "Select ".$consul1." from ".$consul2." Where ".$consul3;
+	// exit();
 
 	$arrresultado = $conexion->doSelect($consul1,$consul2,$consul3);
 
 $horadesde="";
 $horahasta="";
+$horamodulo="";
+	
 	foreach($arrresultado as $i=>$valor){
 	  $horadesde=utf8_encode($valor["horadesde"]);
     $horahasta=utf8_encode($valor["horahasta"]);
@@ -93,22 +98,46 @@ $horahasta="";
 
 		$x=0;
     
-  //  $segundos_horaInicial=strtotime($horadesde);
-//    $horafinal = date("H:i",$segundos_horaInicial);
-//$horaactual= $horadesde->format('H:i');
-$horaactual = date('s', $horadesde);
+  //  	$segundos_horaInicial=strtotime($horadesde);
+  //  	$horafinal = date("H:i",$segundos_horaInicial);
+		// $horaactual= $horadesde->format('H:i');
 
-//echo $horaactual;
-//exit;
-while($horaactual<= 21)
-{
-    $divhoras .= "
-				<a href='reservar?id=$pk_doctor&e=$especialidad_id&s=$sede_id&h=$horaactual'>
-					<button type='button' class='btn btn-success' style='font-size: 17px; cursor: pointer; border-radius: 20px; border: none;  box-shadow: 5px 5px 10px #0000001f;margin: 8px;'>0".$horaactual.":00 </button>
-				</a>
-				";
-	$horaactual++;
-}
+		// $horaactual = date('s', $horadesde);
+		// $horamax = date('s', $horahasta);
+
+
+		// $horadif= $horamax-$horaactual;
+		// //echo $horadif;
+		// //exit;
+		// $horabloque= date('s', $horamodulo);
+		// //echo $horabloque;
+		// //exit;
+		// $horamodulo= 10;
+		// $tiempos = 60 / $horamodulo;
+
+		// //$tiempos = 60 / $horabloque;
+		// echo $tiempos;
+		// exit();
+		// //echo $horaactual;
+		// //exit;
+
+
+// while($horaactual<= 21)
+// {
+//     $cc=0;
+//     $cct=00;
+//     while($cc <= $tiempos)
+// 			{
+// 		    $divhoras .= "
+// 						<a href='reservar?id=$pk_doctor&e=$especialidad_id&s=$sede_id&h=$horaactual'>
+// 							<button type='button' class='btn btn-success' style='font-size: 17px; cursor: pointer; border-radius: 20px; border: none;  box-shadow: 5px 5px 10px #0000001f;margin: 8px;'>".$horaactual.":".$cct."</button>
+// 						</a>
+// 						";
+// 			    $cc++;
+// 				$cct+=$horabloque;
+// 			}
+// 	$horaactual++;
+// }
 	}
 
     
@@ -247,24 +276,24 @@ if ($existeespecialidad=="1"){
  
 
 
-$x=0;
-$horaInicial="09:00";
-$minutoAnadir=10;
+// $x=0;
+// $horaInicial="09:00";
+// $minutoAnadir=10;
 
-while( $x <= 53 ){
-	$segundos_horaInicial=strtotime($horaInicial);
-	$segundos_minutoAnadir=$minutoAnadir*60;
-	$arrHorarioList[$x] = date("H:i",$segundos_horaInicial+$segundos_minutoAnadir);
-	$horaInicial = $arrHorarioList[$x];
-	$x++;
-}
-$arrHorarioList= json_encode($arrHorarioList);
-$numcharactersArrHorarioList= strlen($arrHorarioList);
-$arrHorarioList= substr($arrHorarioList,1, 6);
-//$arrHorarioList= substr($arrHorarioList,0);
+// while( $x <= 53 ){
+// 	$segundos_horaInicial=strtotime($horaInicial);
+// 	$segundos_minutoAnadir=$minutoAnadir*60;
+// 	$arrHorarioList[$x] = date("H:i",$segundos_horaInicial+$segundos_minutoAnadir);
+// 	$horaInicial = $arrHorarioList[$x];
+// 	$x++;
+// }
+// $arrHorarioList= json_encode($arrHorarioList);
+// $numcharactersArrHorarioList= strlen($arrHorarioList);
+// $arrHorarioList= substr($arrHorarioList,1, 6);
+// //$arrHorarioList= substr($arrHorarioList,0);
 
-$arrHorarioList=preg_replace("/[,]/", "", $arrHorarioList);
-$arrHorarioList=preg_replace('/["]/', "", $arrHorarioList);
+// $arrHorarioList=preg_replace("/[,]/", "", $arrHorarioList);
+// $arrHorarioList=preg_replace('/["]/', "", $arrHorarioList);
 
 //echo "<pre>";
 //print($arrHorarioList);
@@ -343,14 +372,15 @@ if ($existeespecialidad=="1" && $existesede=="1"){
 
 
 	}
+	
 	$consul1=" horadesde, horahasta, horamodulo
 	    ";
 	$consul2=" profesionales2			
 	";
 	$consul3=" _pk_doctor = '$getmedico'";
  
-	echo "Select ".$consul1." from ".$consul2." Where ".$consul3;
-	 exit();
+	// echo "Select ".$consul1." from ".$consul2." Where ".$consul3;
+	 // exit();
 
 	$arrresultado = $conexion->doSelect($consul1,$consul2,$consul3);
 
@@ -366,6 +396,8 @@ if ($existeespecialidad=="1" && $existesede=="1"){
     
     $segundos_horaInicial=strtotime($horadesde);
     $horafinal = date("H:i",$segundos_horaInicial);
+
+
 
 
     	$divhoras .= "
@@ -501,12 +533,14 @@ else
 
 
 
-    	$segundos_horafinal = strtotime($horafinal);
+      $segundos_horafinal = strtotime($horafinal);
     	// echo " ".$segundos_horafinal = $segundos_horafinal+strtotime($horamodulo);
     	$segundos_horafinal = $segundos_horafinal+(date("i",strtotime($horamodulo))*60);
-    	$horafinal = date("H:i",$segundos_horafinal);
+    	ech $horafinal = date("H:i",$segundos_horafinal);
     	// echo "<br>";
     	// echo $x."<br>";
+
+    	exit();
 
 
 
