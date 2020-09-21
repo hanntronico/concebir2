@@ -536,7 +536,7 @@ else
       $segundos_horafinal = strtotime($horafinal);
     	// echo " ".$segundos_horafinal = $segundos_horafinal+strtotime($horamodulo);
     	$segundos_horafinal = $segundos_horafinal+(date("i",strtotime($horamodulo))*60);
-    	ech $horafinal = date("H:i",$segundos_horafinal);
+    	echo $horafinal = date("H:i",$segundos_horafinal);
     	// echo "<br>";
     	// echo $x."<br>";
 
