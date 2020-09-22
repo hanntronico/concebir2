@@ -90,31 +90,45 @@
       $("#month").change(function(){
         var month= $("#month").val();
         // $("#mes").val(month);
-        
-      var hlink = "";  
-      
-      if ($("#mes").val()=="") {
-        hlink="&h="+month;
-        // alert(hlink);
-        window.location.href = window.location.href+hlink;
-      }else{
-        if (month==$("#mes").val()) {
-          hlink="";
-          // alert("igual");
-          window.location.href = window.location.href+hlink;
-        }else{
-          
-          var str = window.location.href;
-          var olink = str.split("&h=");
-          hlink=olink[0]+"&h="+month;
-          // alert("diferente -> "+hlink);
-          window.location.href = hlink;
 
-        }
+        var hoy = new Date();
+        var dd = hoy.getDate();
+        var mm = hoy.getMonth()+1;
+        var yyyy = hoy.getFullYear();
+
+        if(dd<10) { dd='0'+dd; } 
+        if(mm<10) { mm='0'+mm; } 
+        var today = yyyy+"-"+mm+"-"+dd; 
+
+
+      if (month >= today){
+
+          var hlink = "";  
+          
+          if ($("#mes").val()=="") {
+            hlink="&h="+month;
+            window.location.href = window.location.href+hlink;
+          }else{
+            if (month==$("#mes").val()) {
+              hlink="";
+              window.location.href = window.location.href+hlink;
+            }else{
+              
+              var str = window.location.href;
+              var olink = str.split("&h=");
+              hlink=olink[0]+"&h="+month;
+              window.location.href = hlink;
+
+            }
+          }
+
+
+      }else{
+        alert("Ingresar fecha válida")
+        return false;
       }
-        
        
-      });
+  });
 
       // $("#day").change(function(){
       //   var day= $("#day").val();
