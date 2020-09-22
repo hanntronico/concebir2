@@ -26,6 +26,13 @@ if ($iniuser==""){
 (isset($_GET['i'])) ? $getintervalo=$_GET['i'] :$getintervalo ='';
 
 
+if ($gethorario!=""){
+	$valortextmes=$gethorario;
+	$existehorario = 1;
+}else{
+	$valortextmes="";
+}
+
 
 
 $conexion = new ConexionBd();
@@ -315,7 +322,7 @@ if ($existeespecialidad=="1" && $existesede=="1"){
 
 
 	if ($gethorario!=""){
-		$wherehorario .= "and horario._pk_horario = '$gethorario' ";		
+		$wherehorario .= "and horario._pk_horario = '$gethorario' ";
 	}
 
 	$displayfechas  ="";
@@ -342,7 +349,7 @@ if ($existeespecialidad=="1" && $existesede=="1"){
 	$horario_fecha= "No tiene fechas disponibles";
 
 
-	// $divfecha = "";
+	$divfecha = "";
 
 		// echo "<pre>";
 		// print_r($arrresultado);
@@ -369,18 +376,44 @@ if ($existeespecialidad=="1" && $existesede=="1"){
 	
 		$countChatHorarioLunes= strlen($horarioLunes);
 
-
-
 	}
-	
-	$consul1=" horadesde, horahasta, horamodulo
-	    ";
-	$consul2=" profesionales2			
-	";
+
+	// echo "<pre>";
+	// print_r($arrresultado);
+	// echo "</pre>";
+	// exit();
+
+	$vectorHorario = [];
+	$vectorFecha = [];
+
+	$hquery1=" horaInicio, _fk_Fecha ";
+	$hquery2=" citas2 ";
+	$hquery3=" _fk_medicoTratante =  '$getmedico' order by 2 ";
+
+	// echo "Select ".$hquery1." from ".$hquery2." where ".$hquery3;
+	// exit();
+	$arrresultado2 = $conexion->doSelect($hquery1, $hquery2, $hquery3);
+
+	foreach ($arrresultado2 as $i => $valor) {
+		$horainicio = utf8_encode($valor["horaInicio"]);
+		$fkfecha = utf8_encode($valor["_fk_Fecha"]);
+		$vectorHorario[$i]=$horainicio;
+		$vectorFecha[$i]=$fkfecha;
+	}
+
+
+	// echo $arrresultado2[6]["horaInicio"]."<br>";
+
+	// echo "<pre>";
+	// print_r($arrresultado2);
+	// echo "</pre>";
+	// echo "<br>";
+	// exit();
+
+
+	$consul1=" horadesde, horahasta, horamodulo ";
+	$consul2=" profesionales2 ";
 	$consul3=" _pk_doctor = '$getmedico'";
- 
-	// echo "Select ".$consul1." from ".$consul2." Where ".$consul3;
-	 // exit();
 
 	$arrresultado = $conexion->doSelect($consul1,$consul2,$consul3);
 
@@ -393,18 +426,107 @@ if ($existeespecialidad=="1" && $existesede=="1"){
 	}
 
 		$x=0;
-    
-    $segundos_horaInicial=strtotime($horadesde);
-    $horafinal = date("H:i",$segundos_horaInicial);
+		$y=0;    
+		// echo "horadesde: $horadesde -> ".
+		$segundos_horaInicial=strtotime($horadesde);
+		// echo "<br>";
+
+    // echo "horahasta: $horahasta -> ".
+    $segundos_horafinal = strtotime($horahasta);
+		// echo "<br>";
+
+		// echo 
+		$minuto_modulo = date("i",strtotime($horamodulo));
+		// echo "<br>";
+
+		// echo 
+		$horasiguiente = $segundos_horaInicial+(date("i",strtotime($horamodulo))*60);
+		// echo "<br>";
+
+		// echo date("H:i", $horasiguiente);
+		// echo "<br>";
+
+		// $horariovector=0;
+
+		// while( $x <= 20  ){
+		$horariovector="";
+		while( $segundos_horaInicial < $segundos_horafinal  ){
+				$horasiguiente = $segundos_horaInicial+(date("i",strtotime($horamodulo))*60);
+				$segundos_horaInicial = $horasiguiente;
+				// echo "hora final: ".$segundos_horafinal." - ".$segundos_horaInicial.": ".date("H:i", $segundos_horaInicial)."<br>";
+				$mostrar_horario=date("H:i", $segundos_horaInicial);
+
+				// echo date("H:i", $segundos_horaInicial)."<br>";
+				$x++;
+		
+				// if ($arrresultado2[6]["horaInicio"]) {}
+
+				// echo count($arrresultado2)."-";
+				$y=0;
+				$horariovector="";
+				// $fkfecha="";
+				$horariolink="";
+				$estilolink="";
+
+				while ( $y <= count($arrresultado2) ) {
+
+					// if ( $arrresultado2[$y]["horaInicio"] == $mostrar_horario ) {
+					if (  trim(strtotime($arrresultado2[$y]["horaInicio"])) == trim($segundos_horaInicial)  ) {
+						// $horariolink = "reservar?id=$pk_doctor&e=$especialidad_id&s=$sede_id&h=$pk_horario";
+						// $estilolink = "btn btn-success";
+						// $horariovector=$arrresultado2[$y]["horaInicio"];
+						// $horariovector=$horariovector.strtotime($arrresultado2[$y]["horaInicio"]).",";
+						$horariovector.=$arrresultado2[$y]["horaInicio"];
+
+					}else{
+						// $horariolink="#";
+						// $estilolink = "btn btn-danger"; 
+					// 	$horariovector=$arrresultado2[$y]["horaInicio"];
+					}
+
+					
 
 
+					$y++;
+				
+				}
+
+				if ($horariovector=="") {
+					$horariolink = "reservar?id=$pk_doctor&e=$especialidad_id&s=$sede_id&h=$pk_horario";
+					$estilolink = "btn btn-success";
+				}else{
+					$horariolink="#";
+					$estilolink = "btn btn-danger"; 					
+				}
 
 
     	$divhoras .= "
-				<a href='reservar?id=$pk_doctor&e=$especialidad_id&s=$sede_id&h=$pk_horario'>
-					<button type='button' class='btn btn-success' style='font-size: 17px; cursor: pointer; border-radius: 20px; border: none;  box-shadow: 5px 5px 10px #0000001f;margin: 8px;'>desde las $horadesde hasta las $horahasta </button>
+				<a href='$horariolink' style='text-decoration:none;'>
+					<button type='button' class='$estilolink' style='font-size: 17px; cursor: pointer; border-radius: 20px; border: none;  box-shadow: 5px 5px 10px #0000001f;margin: 8px;'>
+					 $mostrar_horario </button>
 				</a>
 				";
+
+				// $divhoras .= "$x-$mostrar_horario - $horariovector.<br>";
+
+		}
+
+
+    // echo " ".$segundos_horafinal = $segundos_horafinal+strtotime($horamodulo);
+    // exit();
+    // echo $segundos_horafinal = $segundos_horafinal+(date("i",strtotime($horamodulo))*60);
+    	// echo $horafinal = date("H:i",$segundos_horafinal);
+    // exit();
+    	// echo "<br>";
+    	// echo $x."<br>";
+
+
+
+    // 	$divhoras .= "
+				// <a href='reservar?id=$pk_doctor&e=$especialidad_id&s=$sede_id&h=$pk_horario'>
+				// 	<button type='button' class='btn btn-success' style='font-size: 17px; cursor: pointer; border-radius: 20px; border: none;  box-shadow: 5px 5px 10px #0000001f;margin: 8px;'>desde las $horadesde hasta las $horahasta </button>
+				// </a>
+				// ";
 
 
 	if ($pk_horario==$gethorario){
@@ -483,20 +605,29 @@ if ($existeespecialidad=="1" && $existesede=="1"){
             </table>
 		';	*/
 
-		$existehorario = 1;
+		// $existehorario = 1;
 	}
 
-	if ($divfecha==""){
-	    $fechass="0";
-		$divfecha= "
-			<div class='alert alert-warning' style='text-align: center; font-weight: normal;'>
-	            <a style='color: #000; font-size: 14px; text-decoration: none;'>
-	                No tiene fechas cargadas
-	            </a><br>
-	        </div>
+			// if ($divfecha==""){
+			//     $fechass="0";
+			// 	$divfecha= "
+			// 		<div class='alert alert-warning' style='text-align: center; font-weight: normal;'>
+			//             <a style='color: #000; font-size: 14px; text-decoration: none;'>
+			//                 No tiene fechas cargadas
+			//             </a><br>
+			//         </div>
 
-		";
-	}
+			// 	";
+			// }
+
+
+
+
+
+	// $gethorario 
+
+
+
 
 }
 
@@ -508,13 +639,44 @@ if ($existeespecialidad=="1" && $existesede=="1"){
 	// echo "<script> alert('"."existe ".$existeespecialidad." ".$existesede." ".$existehorario."') </script>";
 
 
-if ($horario_fecha== "No tiene fechas disponibles"){
+// if ($horario_fecha== "No tiene fechas disponibles"){
 
-}
-else
-{
-//	if ($existeespecialidad=="1" && $existesede=="1" & $existehorario =="1"){
-	if ($existeespecialidad=="1" && $existesede=="1"){
+// }
+// else
+// {
+	if ($existeespecialidad=="1" && $existesede=="1" & $existehorario =="1"){
+	// if ($existeespecialidad=="1" && $existesede=="1"){
+
+		// echo $valortextmes."<br>";
+		// echo count($arrresultado2)."<br>";
+
+		
+		$ii=0;
+		$countsi=0;
+		$countno=0;
+
+		while ($ii <= count($arrresultado2)) {
+			// echo $arrresultado2[$ii]["_fk_Fecha"]."<br>";
+			if ( trim(strtotime($arrresultado2[$ii]["_fk_Fecha"])) == trim(strtotime($valortextmes)) ) {
+				$countsi=$countsi+1;
+			}else{
+				$countno=$countno+1;
+				// echo "no";
+			}
+			$ii++;
+		}
+
+		if ($countsi>0) {
+			echo "<script language='JavaScript'>alert('Fecha encontrada: ".$valortextmes."');</script>";
+		}
+
+
+
+		// exit();
+		// echo "</pre>";
+		
+		// exit();
+
 
 		// echo "hann";
 		// exit();
@@ -533,14 +695,14 @@ else
 
 
 
-      $segundos_horafinal = strtotime($horafinal);
+      // $segundos_horafinal = strtotime($horafinal);
     	// echo " ".$segundos_horafinal = $segundos_horafinal+strtotime($horamodulo);
-    	$segundos_horafinal = $segundos_horafinal+(date("i",strtotime($horamodulo))*60);
-    	echo $horafinal = date("H:i",$segundos_horafinal);
+    	// $segundos_horafinal = $segundos_horafinal+(date("i",strtotime($horamodulo))*60);
+    	// echo $horafinal = date("H:i",$segundos_horafinal);
     	// echo "<br>";
     	// echo $x."<br>";
 
-    	exit();
+    	// exit();
 
 
 
@@ -677,7 +839,9 @@ else
 		// }
 
 
-	}
+	// }
+
+
 }
 
 // echo $divhoras;	

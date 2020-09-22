@@ -104,66 +104,66 @@
 <div class="wrapper">
 	
 
-  <div class="content-wrapper" style="margin-top: -20px">
+  <div class="content-wrapper" style="margin-top: 20px">
   
+  hanntronic
 
     <!-- Main content -->
     <section class="content">
-        <div class="row">
+<!--         <div class="row">
           <div class="col-md-12">
-            <h4 style="line-height: 30px; font-weight: 600">Seleccione el Doctor</h4>            
-
+            <h4 style="line-height: 30px; font-weight: 600">Seleccione el Doctor</h4>
           </div>
-        </div>
-        <div class="row">
-        	
+        </div> -->
+
+<!--         <div class="row">
 					<div class='col-md-4 col-sm-6 col-xs-12' style='margin: 20px 0 40px 0; display: flex; justify-content: center;'>
-							    <div class='card-medical animate__animated animate__flipInX' style='animation-delay: .".$animation_delay."s;'>              
-									<div class='row'>
+							<div class='card-medical animate__animated animate__flipInX' style='animation-delay: .".$animation_delay."s;'>              
+									<div class='row'> -->
 										
-							        <div class='col-sm-12'>
-							        	<div style='height: 200px; display: flex; justify-content: center;'>
-								            <a href='medico?e=5&id=$usuario_id'>
+<!-- 							      <div class='col-sm-12'>
+							        <div style='height: 200px; display: flex; justify-content: center;'>
+								        <a href='medico?e=5&id=$usuario_id'>
 								              <img src='arch/5efcb1b93b1d8.jpg' style='max-width: 100%; max-height: 200px; border-radius: 50%; box-shadow: 3px 11px 16px #1f4e3626;' alt='5efcb1b93b1d8.jpg' title='5efcb1b93b1d8.jpg'>
 								            </a>	
-							            </div>
-									</div>
+							        </div>
+									  </div> -->
 											
 
-							        <div class='col-sm-12'>
-							          <a href='medico?e=5&id=$usuario_id'>
+							        <!-- <div class='col-sm-12'> -->
+<!-- 							          <a href='medico?e=5&id=$usuario_id'>
 							            <h4 style='font-size: 22px; text-align: center; padding: 20px 0;'>Andrea Delgado</h4>
 							          </a>
-							          <hr>
-							          <div class='row'>
-							            <div class='col-sm-12' style='margin-top: 10px'>
+							          <hr> -->
+							          <!-- <div class='row'> -->
+<!-- 							            <div class='col-sm-12' style='margin-top: 10px'>
 							              <a href='reservar?e=5&id=$usuario_id' class='btn-medical btn-reserved'>
 											<button type='button' class='btn btn-primary btn-animation' style='font-size: 17px'>
 											 <span style='margin-right: 8px;'>Reservar</span>
 											 <i class='fa fa-calendar' style='color: white !important;'></i>
 											</button>
 							              </a>
-							            </div>
-							            <div class='col-sm-12' style='margin-top: 10px'>
+							            </div> -->
+
+<!-- 							            <div class='col-sm-12' style='margin-top: 10px'>
 							              <a href='medico?e=5&id=$usuario_id' class='btn-medical btn-more-information'>
 											<button type='button' class='btn btn-success btn-animation' style='font-size: 17px'>
 											<span style='margin-right: 8px;'>Ver Más</span>
 											<i class='fa fa-list'></i>
 											</button>
 							              </a>
-							            </div>
+							            </div> -->
 							            
-							          </div>
-											</div>
+							          <!-- </div> -->
+							          <!-- end row -->
+											<!-- </div> -->
+											<!-- end col -->
 											
 
-							      </div>
+<!-- 							      </div>
 							    </div>
-							   
 							  </div>
-
-
-        </div>
+			        </div> -->
       
 
     </section>

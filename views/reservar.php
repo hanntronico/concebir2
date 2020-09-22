@@ -84,54 +84,80 @@
       display: none;
     }
   </style>
+
   <script>
     $(function() {
-$("#month").change(function(){
-  var month= $("#month").val();
-  var currentlocation= window.location.href;
-  window.location.href= currentlocation+"&h="+month;
-  //alert(month);
-});
-$("#day").change(function(){
-  var day= $("#day").val();
-  var currentlocation= window.location.href;
-  window.location.href= currentlocation+"&dia="+day;
-  //alert(day);
-});
-  $('#calendar').fullCalendar({
-    themeSystem: 'bootstrap4',
-    header: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'month,agendaWeek,agendaDay,listMonth'
-    },
-    weekNumbers: true,
-    eventLimit: true, // allow "more" link when too many events
-   // events: 'https://fullcalendar.io/demo-events.json'
-  });
+      $("#month").change(function(){
+        var month= $("#month").val();
+        // $("#mes").val(month);
+        
+      var hlink = "";  
+      
+      if ($("#mes").val()=="") {
+        hlink="&h="+month;
+        // alert(hlink);
+        window.location.href = window.location.href+hlink;
+      }else{
+        if (month==$("#mes").val()) {
+          hlink="";
+          // alert("igual");
+          window.location.href = window.location.href+hlink;
+        }else{
+          
+          var str = window.location.href;
+          var olink = str.split("&h=");
+          hlink=olink[0]+"&h="+month;
+          // alert("diferente -> "+hlink);
+          window.location.href = hlink;
 
-});
+        }
+      }
+        
+       
+      });
+
+      // $("#day").change(function(){
+      //   var day= $("#day").val();
+      //   var currentlocation= window.location.href;
+      //   window.location.href= currentlocation+"&dia="+day;
+      //   //alert(day);
+      // });
+
+      // $('#calendar').fullCalendar({
+      //   themeSystem: 'bootstrap4',
+      //   header: {
+      //     left: 'prev,next today',
+      //     center: 'title',
+      //     right: 'month,agendaWeek,agendaDay,listMonth'
+      //   },
+      //   weekNumbers: true,
+      //   eventLimit: true, // allow "more" link when too many events
+      //  // events: 'https://fullcalendar.io/demo-events.json'
+      // });
+
+    });
 
 
-function myFunction() {
-         var day= document.getElementById("month").value;
-        alert (day);
-}
+  // function myFunction() {
+  //          var day= document.getElementById("month").value;
+  //         alert (day);
+  // }
   </script>
+
   <style>
-      html, body {
-  margin: 0;
-  padding: 0;
-  font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
-  font-size: 14px;
-}
+    html, body {
+        margin: 0;
+        padding: 0;
+        font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+        font-size: 14px;
+    }
 
-#calendar {
-  max-width: 900px;
-  margin: 40px auto;
-}
-
+    #calendar {
+      max-width: 900px;
+      margin: 40px auto;
+    }
   </style>
+
   <!-- Site wrapper -->
   <div class="wrapper">
 
@@ -188,14 +214,16 @@ function myFunction() {
                   </div>
                 </div>
 
-                  <div style="padding-left: 26%;" <?php echo $displayfechas;?> >
 
+                  <div style="padding-left: 26%;" <?php echo $displayfechas;?> >
 
                     <h3 class="animate__animated animate__fadeInDown" style="margin-top: 50px;">
                       <i class="fa fa-calendar"></i> Seleccione la fecha de su Reserva:
                     </h3>
                     <div class="animate__animated animate__fadeInDown" style="margin-top: 15px">
-                    <input type="date" placeholder="Mes" id="month" />
+                    
+                    <input type="date" placeholder="Mes" id="month"  value="<?php echo $valortextmes; ?>" />
+                    <input type="hidden" name="mes" id="mes" value="<?php echo $valortextmes; ?>">
 
                        <?php echo $divfecha;?>
 
@@ -203,6 +231,7 @@ function myFunction() {
                   </div>
 
                   <hr>
+
                   <div <?php //echo $displayhorarios;?>>
 
 
@@ -282,23 +311,26 @@ function myFunction() {
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.0/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.10.2/dist/fullcalendar.min.js"></script>
   <script id="INLINE_PEN_JS_ID">
-    $(function () {
+   // $(function () {
 
-  $('#calendar').fullCalendar({
-    themeSystem: 'bootstrap4',
-    header: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'month,agendaWeek,agendaDay,listMonth' },
+  // $('#calendar').fullCalendar({
+  //   themeSystem: 'bootstrap4',
+  //   header: {
+  //     left: 'prev,next today',
+  //     center: 'title',
+  //     right: 'month,agendaWeek,agendaDay,listMonth' },
 
-    weekNumbers: true,
-    eventLimit: true, // allow "more" link when too many events
-    events: 'https://fullcalendar.io/demo-events.json' });
+  //   weekNumbers: true,
+  //   eventLimit: true, // allow "more" link when too many events
+  //   events: 'https://fullcalendar.io/demo-events.json' });
 
 
-});
+  //});
+  
     //# sourceURL=pen.js
   </script>
+
+  <script src="sw.js"></script>
 
 </body>
 
