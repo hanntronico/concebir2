@@ -667,42 +667,15 @@ if ($existeespecialidad=="1" && $existesede=="1"){
 		}
 
 		if ($countsi>0) {
-			echo "<script language='JavaScript'>alert('Fecha encontrada: ".$valortextmes."');</script>";
+			// echo "<script language='JavaScript'>alert('Fecha encontrada: ".$valortextmes."');</script>";
+		
+		}else{
+			$divhoras="";
 		}
 
 
 
-		// exit();
-		// echo "</pre>";
-		
-		// exit();
 
-
-		// echo "hann";
-		// exit();
-			// echo $pk_horario;
-			// echo "<br>";
-			// echo $horarioLunes;
-			// echo "<br>";
-			// echo $countChatHorarioLunes;
-			// echo "<br>";
-
-// $x=0;
-// $horaInicial="09:00";
-// $minutoAnadir=10;
-// echo "pk_doctor: ".$pk_doctor; exit();
-
-
-
-
-      // $segundos_horafinal = strtotime($horafinal);
-    	// echo " ".$segundos_horafinal = $segundos_horafinal+strtotime($horamodulo);
-    	// $segundos_horafinal = $segundos_horafinal+(date("i",strtotime($horamodulo))*60);
-    	// echo $horafinal = date("H:i",$segundos_horafinal);
-    	// echo "<br>";
-    	// echo $x."<br>";
-
-    	// exit();
 
 
 
@@ -714,80 +687,13 @@ if ($existeespecialidad=="1" && $existesede=="1"){
     // }
 
 
-	// echo "<pre>";
-	// print_r($arrresultado);
-	// echo "</pre>";
-	// exit();
 
 
-// while( $x <= 53 ){
-// 	$segundos_horaInicial=strtotime($horaInicial);
-// 	$segundos_minutoAnadir=$minutoAnadir*60;
-// 	$arrHorarioList[$x] = date("H:i",$segundos_horaInicial+$segundos_minutoAnadir);
-// 	$horaInicial = $arrHorarioList[$x];
-// 	$x++;
-// }
+
+
 
 
 			$displayhorarios  ="";
-
-
-			// $i=0;
-			// while ( $i <= $countChatHorarioLunes ) {
-			// 	// echo $i.": ".$horarioLunes[$i];
-			// 	// echo "<br>";	
-			// 	// $i++;
-
-			// 	if ($horarioLunes[$i]=="1") {
-			// 		echo $horarioLunes[$i].": disponible"."<br>";
-			// 	// }elseif ($horarioLunes[$i]=="0") {
-			// 	// 	echo "no disponible"."<br>";
-			// 	}
-
-
-			// }
-
-			// exit();
-
-			// $horarioL=""; 
-			// $i=0;
-			// $c=0;
-			// $limit=0;
-			// $arrCharHorarioLunes= array();
-			// while($countChatHorarioLunes>$i)
-			// {
-			//     $c=$i+1;
-			//     $arrCharHorarioLunes[$i] = mb_substr($horarioLunes, $i, $c, "UTF-8");
-			// 		 //remover el caracter $i de $horarioLunes despues de esta linea
-			// 		 //asignar el nuevo valor a horariolunes
-		 
-			//     if ($arrCharHorarioLunes[$i] =="0") {
-			 
-			    
-			//    // $horarioL.= "8:10"." - ".$arrCharHorarioLunes[$i]."<br>";
-			//     $limit= $c+5;
-			//     $horarioL.= substr($arrHorarioList,$c, $limit);
-
-			//     //$horarioL.= $arrHorarioList[$i];
-			    
-			//      $divhoras .= "$horaini.$horario_fecha.$horafin
-			// 			<a href='reservar?id=$pk_doctor&e=$especialidad_id&s=$sede_id&h=$pk_horario'>
-			// 				<button type='button' class='btn btn-success' style='font-size: 17px; cursor: pointer; border-radius: 20px; border: none;  box-shadow: 5px 5px 10px #0000001f;margin: 8px;'>$horarioL </button>
-			// 			</a>			
-			// 		";
-			//     }
-			//     $i++;
-
-			// }
-
-			// echo $horarioL; 
-			// echo $divhoras;	
-			// exit();
-			// echo "<pre>";
-			// print_r($arrCharHorarioLunes);
-			// echo "</pre>";
-			// exit();
-
 
 
 
@@ -845,54 +751,6 @@ if ($existeespecialidad=="1" && $existesede=="1"){
 }
 
 // echo $divhoras;	
-
-
-
-/*****************************************************************************************/
-
-// $horarioL=""; 
-// $i=0;
-// $c=0;
-// $limit-0;
-// $arrCharHorarioLunes= array();
-// while($countChatHorarioLunes>$i)
-// {
-//     $c=$i+1;
-//     $arrCharHorarioLunes[$i] = mb_substr($horarioLunes, $i, $c, "UTF-8");
-//  //remover el caracter $i de $horarioLunes despues de esta linea
- 
-//  //asignar el nuevo valor a horariolunes
- 
- 
-//     if ($arrCharHorarioLunes[$i] =="0")
-//     {
- 
-    
-//    // $horarioL.= "8:10"." - ".$arrCharHorarioLuness[$i]."<br>";
-//     $limit= $c+5;
-//     $horarioL.= substr($arrHorarioList,$c, $limit);
-
-//     //$horarioL.= $arrHorarioList[$i];
-    
-//      $divfecha .= "$horaini.$horario_fecha.$horafin
-// 			<a href='reservar?id=$pk_doctor&e=$especialidad_id&s=$sede_id&h=$pk_horario'>
-// 				<button type='button' class='btn btn-success' style='font-size: 17px; cursor: pointer; border-radius: 20px; border: none;  box-shadow: 5px 5px 10px #0000001f;margin: 8px;'>$horarioL </button>
-// 			</a>			
-// 		";
-//     }
-//     $i++;
-
-// }
-
-// //echo $horarioL; 
-// //exit();
-// // echo "<pre>";
-// // print_r($arrCharHorarioLunes);
-// // echo "</pre>";
-
-/**************************************************************************************************/
-
-
 
 
 require_once "views/reservar.php";
