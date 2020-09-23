@@ -278,9 +278,11 @@
             </div>
 
             <div class=" form-group">
-              <input type="text" placeholder="Fecha de nacimiento" class="form-control" id="f-nacimiento"
+<!--               <input type="text" placeholder="Fecha de nacimiento" class="form-control" id="f-nacimiento"
                 name="f-nacimiento" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy"
-                data-inputmask-placeholder="DD/MM/AAAA">
+                data-inputmask-placeholder="DD/MM/AAAA"> -->
+                <input type="date" placeholder="Fecha de nacimiento" name="f-nacimiento" class="form-control" id="f-nacimiento"  placeholder="Fecha de nacimiento" required="required">
+
             </div>
 
             <div class="row">
