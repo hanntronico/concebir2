@@ -234,6 +234,7 @@ if ($existeespecialidad=="1"){
 			$wheresede = " and usuariosede.sede_id = '$getsede' ";
 		}
 
+
 		$arrresultado = $conexion->doSelect("
 			sede.sede_id, sede_nombre, usuariosede_id
 		    ",

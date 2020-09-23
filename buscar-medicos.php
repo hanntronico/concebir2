@@ -259,7 +259,7 @@ foreach($arrresultado as $i=>$valor){
 		            <div class='col-sm-12' style='margin-top: 10px'>
 		              <a href='medico?e=5&id=$pk_doctor' class='btn-medical btn-more-information'>
 						<button type='button' class='btn btn-success btn-animation' style='font-size: 17px'>
-						<span style='margin-right: 8px;'>Ver Más</span>
+						<span style='margin-right: 8px;'>".utf8_encode("Ver Más")."</span>
 						<i class='fa fa-list'></i>
 						</button>
 		              </a>

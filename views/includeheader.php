@@ -77,26 +77,47 @@ XML;
   <nav class="navbar navbar-static-top">
     <!-- Sidebar toggle button-->
 
-    <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+
+
+    <!-- <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button"> -->
       <!-- <span class="sr-only"></span>
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
       <span class="icon-bar"></span> -->
-    </a>
+    <!-- </a> -->
 
+
+<!--     <div class="row" style="padding: 30px;">
+      <div class="col-md-4">
+        hann              
+      </div>
+      <div class="col-md-4 text-center">
+          <a href="panel">
+            <img src="dist/img/logo2.png" height="100%" class="imglogobar">
+          </a>
+      </div>
+      <div class="col-md-4">
+        hann              
+      </div>
+    </div> -->
 
 
     <div class="main-img">
 
-      <a onclick="javascript:history.back()" class="back-button" style="cursor: pointer; float: left; margin-left: 5px">
-        <button type="button" class="btn"><i class="fa fa-angle-left"></i>&nbsp;&nbsp;Atras</button>
-      </a>
+      <div>
+        <a onclick="javascript:history.back()" class="back-button" style="cursor: pointer; float: left; margin-left: 5px">
+          <button type="button" class="btn"><i class="fa fa-angle-left"></i>&nbsp;&nbsp;Atras</button>
+        </a>
 
-      <?php echo $BTN_sala;?>
+        <?php echo $BTN_sala;?>
+      </div>
 
-      <a href="panel" class="img-logo">
-        <img src="dist/img/logo2.png" height="100%" class="imglogobar">
-      </a>
+      <div style="text-align: center;">
+        <a href="panel" class="img-logo">
+          <img src="dist/img/logo2.png" height="100%" class="imglogobar">
+        </a>
+      </div>
+
 
       <div class="navbar-custom-menu">
 
@@ -133,6 +154,7 @@ XML;
       </div>
 
     </div>
+
   </nav>
   <!-- Start of ChatBot (www.chatbot.com) code -->
   <script type="text/javascript">
