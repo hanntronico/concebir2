@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>  
-  <?php $xajax->printJavascript('lib/'); ?>
+  <?php //$xajax->printJavascript('lib/'); ?>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Reservar</title>

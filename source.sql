@@ -174,31 +174,11 @@ USE sacomici_concebir;
 -- from profesionales2
 -- where name_ap_pat like '%delgado%';
 
--- 
-
-0000000000000000000000000000000000000
-
-0000001111111000000000000000000000000
-
-
-0001111111111111111111111111111000000
-
-	
-0000111111111111111110000000000000000
-
-
-
-
-
-
-
-
-
-
 -- select * from usuarioespecialidad;
 
-
-
+-- select * from horario2 where _fk_doctor = "PRO000000014";
+-- select horaInicio from citas2 where _fk_medicoTratante = "PRO000000014";
+select horaInicio from citas2 where _fk_medicoTratante = "PRO000000014" 
 
 -- select _pk_cita, 
 -- 			 _pk_citaUUID,

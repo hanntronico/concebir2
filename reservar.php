@@ -1,8 +1,14 @@
 <?php
+// $hostname = "localhost";
+// $username = "sacomici_concebir";
+// $password = "m4T}5qdQ4pX3";
+// $database= "sacomici_concebir";
+
 $hostname = "localhost";
-$username = "sacomici_concebir";
-$password = "m4T}5qdQ4pX3";
+$username = "root";
+$password = "*274053*";
 $database= "sacomici_concebir";
+
 
 $mysqli = new mysqli($hostname, $username, $password, $database);
 $divhoras="";
@@ -21,166 +27,184 @@ $sede= $_GET["sede"];
 $fecha= $_GET["fecha"];
 $ubicacion= $_GET["ubicacion"];
 $sede_nombre= $_GET["s"];
-echo "sedenombre: ". $sede_nombre;
+// echo "sedenombre: ". $sede_nombre;
 $ubicacionh= "h.".$ubicacion;
 
 $fecha= date_create($fecha); 
 $fecha= date_format($fecha, "Y/m/d");
-echo "FECHA: ".$fecha;
+// echo "FECHA: ".$fecha;
 $pk_doctor= $_GET["profesional"];
 // Perform query
 
 
 $nombre="";
+
 if ($result = $mysqli -> query("SELECT p._pk_doctor, p.name, p.name_ap_pat, p.name_ap_mat, p.especialidad, p.horamodulo, p.horadesde, p.horahasta, h.horario1Lunes, $ubicacionh   FROM profesionales2 AS p 
 INNER JOIN horario2 AS h ON  p._pk_doctor = h._fk_doctor  WHERE _pk_doctor='$pk_doctor'   ")) {
   echo "Returned rows are: " . $result -> num_rows;
+
   // Free result set
   //$result -> free_result();
+
 if (mysqli_num_rows($result) > 0) {
-            while($row = mysqli_fetch_assoc($result)) {
-$usuario_id=$row["_pk_doctor"];
-               $nombre= $row["name"]. " ".$row["name_ap_pat"]. " ".$row["name_ap_mat"] ;
 
-echo "Especialidad: " . $row["especialidad"]. "<br>";
-$horadesde= $row["horadesde"];
-$horahasta= $row["horahasta"];
-echo "Horadesde:".$horadesde;
-echo "Apellido Materno: " . $row["name_ap_pat"]. "<br>";
-echo "Horario1Lunes: " . $row["horario1Lunes"]  . "<br>";
-$ubicacion1Lunes= $row[$ubicacion];
-echo $ubicacion."    ". $ubicacion1Lunes  . "<br>";
-$horamodulo= $row["horamodulo"];
-//echo "horamodulo: " . $horamodulo  . "<br>";
+  while($row = mysqli_fetch_assoc($result)) {
 
+      $usuario_id=$row["_pk_doctor"];
+      $nombre= $row["name"]. " ".$row["name_ap_pat"]. " ".$row["name_ap_mat"] ;
 
-//if (is_numeric($horamodulo))
+      echo "Especialidad: " . $row["especialidad"]. "<br>";
+      $horadesde= $row["horadesde"];
+      $horahasta= $row["horahasta"];
+      echo "Horadesde:".$horadesde;
+      echo "Apellido Materno: " . $row["name_ap_pat"]. "<br>";
+      echo "Horario1Lunes: " . $row["horario1Lunes"]  . "<br>";
+      $ubicacion1Lunes= $row[$ubicacion];
+      echo $ubicacion."    ". $ubicacion1Lunes  . "<br>";
+      $horamodulo= $row["horamodulo"];
+      
+      //echo "horamodulo: " . $horamodulo  . "<br>";
+      //if (is_numeric($horamodulo))
 
+      echo "resultados:".substr_count($ubicacion1Lunes, $sede)."            ?????????????         ";
+      $discount_start_= '18:47';    
+      $result = mb_substr($horamodulo, 3, 2);
 
-echo "resultados:".substr_count($ubicacion1Lunes, $sede)."            ?????????????         ";
-$discount_start_= '18:47';    
-$result = mb_substr($horamodulo, 3, 2);
 //if (is_numeric($result ))
   //  $result = $string + 0;
 //else // Let the number be 0 if the string is not a number
-    $intervalo = intval($result);
-    $horam= intval($result);
 
-$theDate    = new DateTime('18:47');
-$horamodulo= new DateTime($horamodulo);
-//echo $stringDate = $theDate->format('H:i:s');
-echo "intervalo".$intervalo;
-echo $stringDate = "horamodulo".$horamodulo->format('i:s');
-$i=0;
-$sedesanisidro= "";
-/*foreach (count_chars($ubicacion1Lunes, 1) as $i => $val) {
-$d=0; 
-  echo "There were $val instance(s) of \"" , chr($i) , "\" in the string.\n";
-   while ($val>$d)
-{
-if (chr($i)=="0")
-{
-$sedesanisidro+= "0";
-}
-}		
-}
+      $intervalo = intval($result);
+      $horam= intval($result);
+
+      $theDate    = new DateTime('18:47');
+      $horamodulo= new DateTime($horamodulo);
+      //echo $stringDate = $theDate->format('H:i:s');
+      echo "intervalo".$intervalo;
+      echo $stringDate = "horamodulo".$horamodulo->format('i:s');
+      $i=0;
+      $sedesanisidro= "";
+
+      /*foreach (count_chars($ubicacion1Lunes, 1) as $i => $val) {
+      $d=0; 
+        echo "There were $val instance(s) of \"" , chr($i) , "\" in the string.\n";
+         while ($val>$d)
+      {
+      if (chr($i)=="0")
+      {
+      $sedesanisidro+= "0";
+      }
+      }		
+      }
 
 */
-$e=0;
-$numcaracteres= count_chars($ubicacion1Lunes);
-$countsedeocurrences= substr_count($ubicacion1Lunes, $sede);
-$sedepos= array();
-while ($countsedeocurrences>$e)
-{
-$restodeocurrencias= substr_count($ubicacion1Lunes, $sede);
-echo $restodeocurrencias;
-$sedepos[$e]=strrpos($ubicacion1Lunes,$sede);
-$checkpos= $sedepos[$e];
-echo $chekpos;
-if ($restodeocurrencias==0)
-{
-$e=9999999;
-}
-else{
-//echo "POSICION ULTIMO CARACTER: ".$sedepos[$e];
-$ubicacion1Lunes=substr_replace($ubicacion1Lunes,"", $sedepos[$e]);
-$e++;
-}
-}
 
-$horaactual=$horadesde;
-$horaactual= mb_substr($horaactual, 0, 2);
-//
-echo "hora actual: ".$horaactual."      finhoraactual";
-$horaactual = intval($horaactual);
+  $e=0;
+  $numcaracteres= count_chars($ubicacion1Lunes);
+  $countsedeocurrences= substr_count($ubicacion1Lunes, $sede);
+  $sedepos= array();
 
-echo "CONTADOR:   ".$countsedeocurrences." FIN CONTADOR";
-echo "NUMERO DE CARACTERES:   ".$numcaracteres." FIN NUMERO CARACTERES";
+  while ($countsedeocurrences>$e)
+  {
+    $restodeocurrencias= substr_count($ubicacion1Lunes, $sede);
+    echo $restodeocurrencias;
+    $sedepos[$e]=strrpos($ubicacion1Lunes,$sede);
+    $checkpos= $sedepos[$e];
+    echo $chekpos;
+    if ($restodeocurrencias==0)
+      {
+        $e=9999999;
+      }
+    else{
+      //echo "POSICION ULTIMO CARACTER: ".$sedepos[$e];
+      $ubicacion1Lunes=substr_replace($ubicacion1Lunes,"", $sedepos[$e]);
+      $e++;
+    }
+  }
 
-$intervaloactual=0;
-$horaAgendada= array();
-$sentencia_consulta="SELECT horaInicio, _fk_Fecha FROM citas2 WHERE _fk_ubicacion =$sede AND _fk_medicoTratante ='$pk_doctor' AND _fk_Fecha>CURRENT_TIMESTAMP AND _fk_Fecha=DATE('$fecha')";
-echo $sentencia_consulta;
-if ($consulta=$mysqli -> query("SELECT horaInicio, _fk_Fecha FROM citas2 WHERE _fk_ubicacion =$sede AND _fk_medicoTratante ='$pk_doctor' AND _fk_Fecha>CURRENT_TIMESTAMP AND _fk_Fecha=DATE('$fecha')"));
+  $horaactual=$horadesde;
+  $horaactual= mb_substr($horaactual, 0, 2);
+  //
+  echo "hora actual: ".$horaactual."      finhoraactual";
+  $horaactual = intval($horaactual);
 
-{
-if (mysqli_num_rows($consulta) > 0) {
-$c=0;
-            while($row = mysqli_fetch_assoc($consulta)) {
+  echo "CONTADOR:   ".$countsedeocurrences." FIN CONTADOR";
+  echo "NUMERO DE CARACTERES:   ".$numcaracteres." FIN NUMERO CARACTERES";
 
-$horaAgendada[$c]= $row["horaInicio"];
-$horaAgendada[$c]= mb_substr($horaAgendada[$c], 0, 5);
+    $intervaloactual=0;
+    $horaAgendada= array();
+    $sentencia_consulta="SELECT horaInicio, _fk_Fecha 
+                         FROM citas2 
+                         WHERE _fk_ubicacion =$sede 
+                         AND _fk_medicoTratante ='$pk_doctor' 
+                         AND _fk_Fecha>CURRENT_TIMESTAMP 
+                         AND _fk_Fecha=DATE('$fecha')";
+  echo $sentencia_consulta;
 
-echo "Inicio HoraAgendada".$horaAgendada[$c]."Fin HoraAgendada";
-$c++;
+    if ($consulta=$mysqli -> query("SELECT horaInicio, _fk_Fecha FROM citas2 WHERE _fk_ubicacion =$sede AND _fk_medicoTratante ='$pk_doctor' AND _fk_Fecha>CURRENT_TIMESTAMP AND _fk_Fecha=DATE('$fecha')"));
+    {
 
-}
-}
-}
-while ($i<$countsedeocurrences)
-{
-$mult= $sedepos[$i];
-$mult= intval($mult);
-echo "mult:". $mult;
-echo "horamodulo: ".$horam;
-$intervalo= $horam*$mult;
-$intervaloactual= $intervalo;
-if ($intervaloactual==60)
-{
-	$horaactual= $horaactual+1;
-	$intervaloactual=00;	
-}
-else if ($intervaloactual>60)
-{
-echo "intervaloactuale es : ".$intervaloactual. "   ". " horaactual es ". $horaactual;
-$horaactual= $horadesde+round($intervaloactual/60);
-echo "HORA ES MAS QUE 60 Y ES :".$horaactual;
-$intervaloactual=round($intervaloactual%60);
-echo "intervaloactuale ahora  es : ".$intervaloactual. "   ";
+      if (mysqli_num_rows($consulta) > 0) {
+        $c=0;
+        while($row = mysqli_fetch_assoc($consulta)) {
+          $horaAgendada[$c]= $row["horaInicio"];
+          $horaAgendada[$c]= mb_substr($horaAgendada[$c], 0, 5);
 
-}
+          echo "Inicio HoraAgendada".$horaAgendada[$c]."Fin HoraAgendada";
+          $c++;
+        }
+      }
+    }
 
-$hora=$horaactual.":".$intervaloactual;
-if ($hora!=$horaAgendada[$i])
-{
-echo "BLOQUE". $hora. "FIN DEL BLOQUE";
- $divhoras .= "	    	
-			<a href='reservar?id=$usuario_id&e=$especialidad_id&s=$sede_id&h=$horario_id&i=$hora' style='margin-right: 10px; margin-bottom: 10px'>
-				<button type='button' class='btn btn-success' style='font-size: 17px; cursor: pointer; margin-top: 10px; padding: 5px 27px; border-radius: 20px; outline: none; box-shadow: 5px 5px 10px #0000001f; border: none;'>$hora </button>
-			</a>";
+    while ($i<$countsedeocurrences)
+      {
+        $mult= $sedepos[$i];
+        $mult= intval($mult);
+        echo "mult:". $mult;
+        echo "horamodulo: ".$horam;
+        $intervalo= $horam*$mult;
+        $intervaloactual= $intervalo;
 
-	
-}
-else
-	echo "....HORA AGENDADA Y HORA BLOQUE MATCH....";
-$i++;
-}
+        if ($intervaloactual==60)
+          {
+          	$horaactual= $horaactual+1;
+          	$intervaloactual=00;	
+          }
+        else if ($intervaloactual>60)
+          {
+            echo "intervaloactuale es : ".$intervaloactual. "   ". " horaactual es ". $horaactual;
+            $horaactual= $horadesde+round($intervaloactual/60);
+            echo "HORA ES MAS QUE 60 Y ES :".$horaactual;
+            $intervaloactual=round($intervaloactual%60);
+            echo "intervaloactuale ahora  es : ".$intervaloactual. "   ";
+          }
 
+          $hora=$horaactual.":".$intervaloactual;
+          if ($hora!=$horaAgendada[$i])
+            {
+              echo "BLOQUE". $hora. "FIN DEL BLOQUE";
+              $divhoras .= "	    	
+            			<a href='reservar?id=$usuario_id&e=$especialidad_id&s=$sede_id&h=$horario_id&i=$hora' style='margin-right: 10px; margin-bottom: 10px'>
+            				<button type='button' class='btn btn-success' style='font-size: 17px; cursor: pointer; margin-top: 10px; padding: 5px 27px; border-radius: 20px; outline: none; box-shadow: 5px 5px 10px #0000001f; border: none;'>$hora </button>
+            			</a>";
             }
+            else
+            	echo "....HORA AGENDADA Y HORA BLOQUE MATCH....";
+            $i++;
+      }
+
+    }
+         
+
+
          } else {
             echo "No hay fechas disponibles";
          }
 }
+
+
+echo $divhoras;
+
 
 $divespecialidades ="";
 $divsedes ="";
@@ -209,11 +233,16 @@ $divfecha = "
 		";
 */
 
+// echo
+
 $displaysedes="";
 $displayfechas="";
 $displayhorarios="";
 $displayconfirmar="";
 
+require_once "views/reservar.php";
+
+exit();
 ?>
 
 <!DOCTYPE html>
